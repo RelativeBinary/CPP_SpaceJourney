@@ -1,7 +1,7 @@
-#include <iostream>
-
-
-
+#include "functions.h"
+#include "Officer.h"
+#include "SpaceShip.h"
+#include "SpaceSector.h"
 int main(int argc, char* argv[]){
     std::cout << "Charging Partical Accellerators.." << '\n';
     std::cout << '\n';
