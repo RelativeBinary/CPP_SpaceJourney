@@ -1,8 +1,5 @@
 #ifndef officer_h
 #define officer_h
-//#include "functions.h"
-//#include "Officer.h"
-//#include "SpaceSector.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -10,16 +7,19 @@ class Officer
 {
     std::string name, rank, job;
     int age, health, skillLevel;
+    bool isDead;
     public:
+        Officer();                                                                                        //isDead is auto false
+        Officer(std::string name, std::string rank, std::string job, int age, int health, int skillLevel);//isDead is auto false
         void displayOfficer();                  //used durring simluation
-        bool isDead();                          //used for documenting purposes and in checking officiers after taking damage, ship will check for dead after takeDamageFrom func, if there is dead it will promote a crew member and give appropriate stats and rank.
+        bool getIsDead();                       //used for documenting purposes and in checking officiers after taking damage, ship will checkForDead after takeDamageFrom func, if there is dead ship will promote a crew member and give appropriate stats and rank based on rng and the dead officer
         int getAge();                           //used for documenting purposes
         int getHealth();                        //used for documenting purposes
         int getSkillLevel();                    //used for documenting purposes
         std::string getName();                  //used for documenting purposes
         std::string getRank();                  //used to determine what ability stats are affected
         std::string getJob();                   //used to determine what ability stats are affected
-        void recieveDamage(int damage);         //checks if damage is > 0 and if officer will take extra damage, if health is <= 0 after taking damage then use hasDied().
+        void recieveDamage(int damage);         //checks if damage is > 0 and if officer will take extra damage, if health is <= 0 after taking damage then set isDead to true.
         void restoreHealth();                   //when systems recovery is used
         void levelUpSkill();                    //when enemies are defeated
     private:

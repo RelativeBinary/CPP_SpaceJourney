@@ -20,11 +20,17 @@
 
 //simulation functions
 
+//create shiop
+
+//create officer
+
+//create spacesector
+
 //other logic things that main shouldnt need to do
 
 #endif
 
 //TODO:
 /*
-- Nothing to see here
+- Several Functions for development
 */

@@ -9,5 +9,9 @@ Race::Race(){
 }
 
 SpaceSector::SpaceSector(){
-    
+
+}
+
+PlanetEncounter::PlanetEncounter() : SpaceSector(){
+
 }

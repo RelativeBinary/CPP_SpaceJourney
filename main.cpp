@@ -14,7 +14,9 @@ int main(int argc, char* argv[]){
 
     //initialize officiers and skill stats
 
-    //
+    SpaceShip f1;
+    Officer f2;
+    SpaceSector f3;
 
     return 0;
 }
