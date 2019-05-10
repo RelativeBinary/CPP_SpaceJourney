@@ -17,6 +17,8 @@ int main(int argc, char* argv[]){
     SpaceShip f1;
     Officer f2;
     SpaceSector f3;
-
+    
+    f2.displayOfficer();
+    f2.levelUpSkill(30);
     return 0;
 }

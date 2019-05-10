@@ -22,7 +22,7 @@
 
 //create shiop
 
-//create officer
+//create officer from file (assignment specifice you can load names into the game, but i'd like to load in customer characters like when you play DnD)
 
 //create spacesector
 
