@@ -14,11 +14,22 @@ int main(int argc, char* argv[]){
 
     //initialize officiers and skill stats
 
-    SpaceShip f1;
+    #pragma region
+    //Officer function testing
+    //Stage one - no rng, testing function effects
     Officer f2;
-    SpaceSector f3;
-    
     f2.displayOfficer();
-    f2.levelUpSkill(30);
+    f2.levelUpSkill(10);
+    f2.recieveDamage(20);
+    f2.restoreHealth(5);
+    f2.displayOfficer();
+
+
+
+    #pragma endregion
+
+    SpaceShip f1;
+    SpaceSector f3;
+
     return 0;
 }

@@ -23,10 +23,10 @@ class Officer
         void restoreHealth(int damage);                   //when systems recovery is used
         void levelUpSkill(int exp);                    //when enemies are defeated and if the officer didnt die they will receive rng exp
     private:
-        void rankUp();                          //if skill level >50, >75 >99 rank up change rank
         void healthFortuna();                   //based on skillLevel and rank, higher = higher chance of bonus health resorted from systemRecovery and from visiting trading stations
-        bool skillFortuna();                    //10% chance of getting skill level boost, after surviving combat (when using escape or after enemey is destroyed)
-        bool rankFortuna();                     //3% chance of ranking up, after surviving combat (when using escape or after enemey is destroyed)
+        void skillFortuna();                    //10% chance of getting skill level boost, after surviving combat (when using escape or after enemey is destroyed)
+        void rankFortuna();                     //3% chance of ranking up, after surviving combat (when using escape or after enemey is destroyed)
+        //void Age(); rasies age by 1, occurs every space sector, dying from organ failure is more common for higher ages
 };
 
 #endif
