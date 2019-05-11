@@ -17,14 +17,19 @@
                              * **********************************************************************************************************************/
 
 //rng funtion
+// function(range, tries)
+int randNumGen(int range);
 
 //simulation functions
 
-//create shiop
-
 //create officer from file (assignment specifice you can load names into the game, but i'd like to load in customer characters like when you play DnD)
 
+//create a flock of Officers (makes like 5 (one for each job) using the create officer function)
+
+//create a playerShip which uses the above Officer functions
+
 //create spacesector
+
 
 //other logic things that main shouldnt need to do
 

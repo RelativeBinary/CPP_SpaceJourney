@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "Officer.h"
+#include "functions.h"
 
 Officer::Officer(){
     this->name = "defaultConstructor";
@@ -62,7 +63,7 @@ std::string Officer::getJob(){
 }
 
 void Officer::recieveDamage(int damage){
-    std::cout << damage << " dealt on " << this->name << '\n';
+    std::cout << damage << " damage dealt on " << this->name << '\n';
     this->health -= damage;
     std::cout << this->name << "'s hp is now: " << this->health << "hp\n";
 
@@ -101,10 +102,7 @@ void Officer::levelUpSkill(int exp) {
 }
 
 void Officer::healthFortuna(){
-    //TBC when rng function is completed
-    //5% chance, to add 10hp
-    int chance = 5;
-
+    int chance = randNumGen(100);
     if (chance <= 5){
         std::cout << "Health Fortuna! " << this->name << "'s hp is increased by 10\n";
         this->health += 10;
@@ -113,11 +111,7 @@ void Officer::healthFortuna(){
 }
 
 void Officer::skillFortuna(){
-    //TBC when rng function is completed
-    //5% chance, to add more exp when levelUpSkill is used
-    int chance = 5;
-
-
+    int chance = randNumGen(100);
     if (chance <= 5){
         std::cout << "Skill Fortuna! " << this->name << "'s gained bonus 10 exp\n";
         this->skillLevel += 10;
@@ -126,10 +120,8 @@ void Officer::skillFortuna(){
 }
 
 void Officer::rankFortuna(){
-    //TBC when rng function is completed
-    //1% chance, to be promoted to Major and skill raised to 99
-    int chance = 1;
-    if (chance == 1){
+    int chance = randNumGen(100);
+    if (chance == 0){
         std::cout << "Rank Fortuna! " << this->name << "'s";
         if (this->skillLevel >= 90){
             std::cout << " rank is capped out, skill level increased by 10\n";
