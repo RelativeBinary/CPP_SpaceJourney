@@ -19,6 +19,7 @@
 //rng funtion
 // function(range, tries)
 int randNumGen(int range);
+std::string determineShipType();
 
 //simulation functions
 
@@ -35,7 +36,7 @@ int randNumGen(int range);
 
 #endif
 
-//TODO:
-/*
+    //TODO:
+    /*
 - Several Functions for development
 */

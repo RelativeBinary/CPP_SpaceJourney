@@ -17,19 +17,19 @@ int main(int argc, char* argv[]){
 
     //initialize officiers and skill stats
 
-    #pragma region
+
+    #pragma region //Officer Test Code
     //Officer function testing
     //Stage one - no rng, testing function effects: testing complete, outputs OK, logic OK, non-rng testing completed
     //Stage two - rng, testing function effects:
-    Officer f2;
-    f2.displayOfficer();
-    f2.levelUpSkill(10);
-    f2.recieveDamage(20);
-    f2.restoreHealth(5);
-    f2.displayOfficer();
-
-
+    //Officer f2;
+    //f2.displayOfficer();
+    //f2.levelUpSkill(10);
+    //f2.recieveDamage(20);
+    //f2.restoreHealth(5);
+    //f2.displayOfficer();
     #pragma endregion
+
 
     SpaceShip f1;
     SpaceSector f3;
