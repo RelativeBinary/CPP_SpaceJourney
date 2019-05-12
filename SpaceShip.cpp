@@ -69,7 +69,8 @@ Playership::Playership()
     int cargoCapacity = 0; //out of 100
     int mainingPower = 0;  // out of 100
     int fuelEfficiency = 0; //out of 10
-    std::string shipType = "defaultConstrutor";
+    std::string shipType = "Jack";
+
 }
 
 Playership::Playership(std::vector<Officer> officers){
@@ -98,5 +99,116 @@ void Playership::setupShip(){
     }else if (this->shipType == "Jack"){
         AverageSetup();
     }
+}
+
+void Playership::addOfficer(Officer newOfficer){
+
+}
+
+void Playership::useDiplomacy(SpaceShip &aggressor){
+
+}
+void Playership::useTrade(SpaceShip &tradeShip){
+
+}
+void Playership::useTravel(){
+    //check for dead officers, replace dead officers etc
+    //perform systems recovery
+    //
+
+}
+void Playership::useCombatMauver(SpaceShip &target){
+
+}
+void Playership::useEscape(SpaceShip &enemy){
+
+}
+void Playership::useSystemsRecovery(){
+
+}
+void Playership::useMine(PlanetEncounter &planet){
+
+}
+void Playership::useAttack(SpaceShip &target){
+
+}
+void Playership::upgradeDefense(){
+
+}
+void Playership::takeDamageFrom(SpaceShip enemy){
+
+}
+
+Officer Playership::findOfficer(std::string job){
+    Officer temp("noOfficer", "none", "none", 20, 50, 0);
+
+    for (Officer currOfficer: this->officers){
+        if(currOfficer.getJob() == job && !currOfficer.getIsDead()){
+            return currOfficer;
+        }
+    }
+
+    std::cout << "There is currently no " << job << " on the ship! \n";
+    return temp;
+}
+
+void Playership::OffensiveSetup(){
+    this->speed = randNumGen(40, 70);
+    this->shield = randNumGen(40, 70);
+    this->agility = randNumGen(40, 70);
+    this->health = randNumGen(70, 100);
+    this->armour = randNumGen(70, 100);
+    this->strength = randNumGen(70, 100);
+    this->miningPower = randNumGen(0, 40);
+    this->cargoCapacity = randNumGen(0, 40);
+    this->fuelEfficiency = randNumGen(40, 70);
+}
+
+void Playership::MinerSetup(){
+    this->speed = randNumGen(40, 70);
+    this->shield = randNumGen(0, 40);
+    this->agility = randNumGen(40, 70);
+    this->health = randNumGen(40, 70);
+    this->armour = randNumGen(0, 40);
+    this->strength = randNumGen(40, 70);
+    this->miningPower = randNumGen(70, 100);
+    this->cargoCapacity = randNumGen(70, 100);
+    this->fuelEfficiency = randNumGen(70, 100);
+}
+
+void Playership::DefensiveSetup(){
+    this->speed = randNumGen(70, 100);
+    this->shield = randNumGen(70, 100);
+    this->agility = randNumGen(70, 100);
+    this->health = randNumGen(70, 100);
+    this->armour = randNumGen(70, 100);
+    this->strength = randNumGen(0, 40);
+    this->miningPower = randNumGen(40, 70);
+    this->cargoCapacity = randNumGen(40, 70);
+    this->fuelEfficiency = randNumGen(40, 70);
+}
+
+void Playership::OneHitSetup(){
+    this->speed = randNumGen(70, 100);
+    this->shield = randNumGen(70, 100);
+    this->agility = randNumGen(70, 100);
+    this->health = 1;
+    this->armour = randNumGen(40, 70);
+    this->strength = randNumGen(90, 100);
+    this->miningPower = randNumGen(40, 70);
+    this->cargoCapacity = randNumGen(40, 70);
+    this->fuelEfficiency = randNumGen(40, 70);
+}
+    
+void Playership::AverageSetup(){
+    this->speed = randNumGen(40, 70);
+    this->shield = randNumGen(40, 70);
+    this->agility = randNumGen(40, 70);
+    this->health = randNumGen(40, 70);
+    this->armour = randNumGen(40, 70);
+    this->strength = randNumGen(40, 70);
+    this->miningPower = randNumGen(40, 70);
+    this->cargoCapacity = randNumGen(40, 70);
+    this->fuelEfficiency = randNumGen(40, 70);
 }
 

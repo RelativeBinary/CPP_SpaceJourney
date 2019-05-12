@@ -4,10 +4,11 @@
 #include <random>
 #include <time.h>
 
-int randNumGen(int range){//a need to take upper and lower limits for ship types and race types.
+int randNumGen(int min, int max){
     int value = 0;
     for(int i =0; i<20; i++){
-        value = rand() % 100;
+        value = rand() % max;
+        value += min;
     } 
     std::cout << "random number is : " << value << '\n';
     return value;
@@ -15,11 +16,7 @@ int randNumGen(int range){//a need to take upper and lower limits for ship types
 }
 
 std::string determineShipType(){
-    int value = 0;
-    for (int i = 0; i < 20; i++){
-        value = rand() % 5;
-    }
-    std::cout << "random number is : " << value << '\n';
+    int value = randNumGen(0, 5);
 
     if (value == 0){
         return "Dawn Sailor";

@@ -102,7 +102,7 @@ void Officer::levelUpSkill(int exp) {
 }
 
 void Officer::healthFortuna(){
-    int chance = randNumGen(100);
+    int chance = randNumGen(0,100);
     if (chance <= 5){
         std::cout << "Health Fortuna! " << this->name << "'s hp is increased by 10\n";
         this->health += 10;
@@ -111,7 +111,7 @@ void Officer::healthFortuna(){
 }
 
 void Officer::skillFortuna(){
-    int chance = randNumGen(100);
+    int chance = randNumGen(0,100);
     if (chance <= 5){
         std::cout << "Skill Fortuna! " << this->name << "'s gained bonus 10 exp\n";
         this->skillLevel += 10;
@@ -120,7 +120,7 @@ void Officer::skillFortuna(){
 }
 
 void Officer::rankFortuna(){
-    int chance = randNumGen(100);
+    int chance = randNumGen(0,100);
     if (chance == 0){
         std::cout << "Rank Fortuna! " << this->name << "'s";
         if (this->skillLevel >= 90){

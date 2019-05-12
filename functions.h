@@ -18,7 +18,7 @@
 
 //rng funtion
 // function(range, tries)
-int randNumGen(int range);
+int randNumGen(int min, int max);
 std::string determineShipType();
 
 //simulation functions
