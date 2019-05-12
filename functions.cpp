@@ -2,19 +2,14 @@
 #include <string>
 #include <vector>
 #include <random>
+#include <time.h>
 
 int randNumGen(int range){
-    static std::random_device randEngine;
-    static std::mt19937 gen(randEngine());
-    static std::uniform_real_distribution<>dis(0.0,1.0);
-
     int value = 0;
-
-    for (int i = 0; i < 50; i++){
-        value = range * dis(gen);
-        //std::cout << value << '\n';
-    }
-
+    for(int i =0; i<20; i++){
+        value = rand() % 100;
+    } 
+    std::cout << "random number is : " << value << '\n';
     return value;
 
 }

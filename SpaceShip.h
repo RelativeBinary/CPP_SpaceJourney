@@ -53,7 +53,12 @@ class Playership : public SpaceShip
 
     public:
         //TODO: Added getters for data values
-
+        int getCrew();
+        int getCargoCapacity();
+        int getminingPower();
+        int getfuelEfficiency();
+        std::string getShipType();
+        std::vector<Officer> getOfficers();
         //TODO: Make sure all abilities are being defined here
         void useDiplomacy(SpaceShip &aggressor);                            //use captain, targets diplomacy stat, check skillevel, rng chance of success
         void useTrade();                                                    //use captain, rng chance of success
