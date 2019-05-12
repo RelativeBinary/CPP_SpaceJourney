@@ -128,7 +128,7 @@ void Officer::rankFortuna(){
             this->skillLevel += 10;
         } else {
             std::cout << " rank is raised to major, skill level raised to 90\n";
-            this->skillLevel = 99;
+            this->skillLevel = 90;
             this->rank = "Major";
         }
     }
