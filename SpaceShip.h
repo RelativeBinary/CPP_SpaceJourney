@@ -106,7 +106,7 @@ public:
     bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
     bool takeDamageFrom(SpaceShipEncounter &attacker);
 private:
-    void reallocateDefense(); //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
+    void recalculateDefense(); //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
     void setupShip();
     void OffensiveSetup();
     void MinerSetup();

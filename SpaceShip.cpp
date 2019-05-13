@@ -162,7 +162,8 @@ bool Playership::useDiplomacy(SpaceSector &aggressor){
     std::cout << "negotiations failed!!\n";
     return false;
 }
-void Playership::useTrade(SpaceSector &trader){//only works with planets and trading stations
+void Playership::useTrade(SpaceSector &trader)//only works with planets and trading stations
+{
     Officer captain = findOfficer("captain");
     int capLvl = captain.getSkillLevel();
     int chance = (capLvl + trader.getRace().getTradabilityLevel())/2;
@@ -301,7 +302,7 @@ bool Playership::useAttack(SpaceShipEncounter &target)
     std::cout << "attack failed\n";
     return false;
 }
-void Playership::reallocateDefense(){ //used after addOfficer and officer is of job "engi" or "weapons" 
+void Playership::recalculateDefense(){ //used after addOfficer and officer is of job "engi" or "weapons" 
     int engiLvl = findOfficer("engineer").getSkillLevel();
     int weaponsLvl = findOfficer("weapons").getSkillLevel();
     int chance = (engiLvl + weaponsLvl)/2;
