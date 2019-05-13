@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include "SpaceShip.h"
-#include "Officer.h"
 #include "functions.h"
 
 SpaceShip::SpaceShip(){
@@ -61,6 +60,10 @@ int SpaceShip::getResources() {
 }
 int SpaceShip::getMoney() {
     return this->money;
+}
+
+SpaceShipEncounter::SpaceShipEncounter(){
+
 }
 
 Playership::Playership() 
@@ -134,10 +137,11 @@ void Playership::useTravel(){
     }
     //SOME GLOBAL FUNCTION TO MOVE TO THE NEXT SPACESECTOR
 }
-bool Playership::useCombatMauver(SpaceshipEncounter &attacker){
+bool Playership::useCombatMauver(SpaceShipEncounter &attacker)
+{
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
-    int chance = (engiLvl + pilotLvl + this->agility + this->speed - attacker.getRace().getOffensiveAbilityLevel())/3;
+    int chance = (engiLvl + pilotLvl + this->agility + this->speed /*- attacker.getRace().getOffensiveAbilityLevel()*/)/3;
     if (chance >= randNumGen(0,100)){
         std::cout << "Attack was successfully evaded.\n";
         return true;
@@ -145,10 +149,11 @@ bool Playership::useCombatMauver(SpaceshipEncounter &attacker){
     std::cout << "Unable to evade attack. \n";
     return false;
 }
-void Playership::useEscape(SpaceshipEncounter &attacker){
+void Playership::useEscape(SpaceShipEncounter &attacker)
+{
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
-    int chance = (engiLvl + pilotLvl + this->speed + this->agility - (attacker.getRace().getOffensiveAbilityLevel() + attacker.getShip().getSpeed()))/3;
+    int chance = (engiLvl + pilotLvl + this->speed + this->agility /*- (attacker.getRace().getOffensiveAbilityLevel())*/)/3;
     if (chance >= randNumGen(0,100)){
         std::cout << "successful escape\n";
         //determine fuel and food costs
@@ -168,7 +173,8 @@ void Playership::useMine(PlanetEncounter &planet){
         std::cout << "successful mine, now determine how much loot u get\n";
     }
 }
-void Playership::useAttack(SpaceshipEncounter &target){
+void Playership::useAttack(SpaceShipEncounter &target)
+{
     int weaponLvl = findOfficer("weapons").getSkillLevel() + this->strength;
     int chance = (weaponLvl - target.getRace().getCombatManuverabilityLevel())/1.5;
     if (chance >= randNumGen(0,100)){
@@ -184,11 +190,12 @@ void Playership::upgradeDefense(){
     }
     
 }
-void Playership::takeDamageFrom(SpaceshipEncounter &attacker){
+void Playership::takeDamageFrom(SpaceShipEncounter &attacker)
+{
     //get appropriate stats
     
     //determine damage taken
-    int damage = (attacker.getRace().getOffensiveAbilityLevel() + attacker.getShip().getStrength() - this->defesiveAbilityLevel)/2;
+    int damage = (attacker.getRace().getOffensiveAbilityLevel() + /*attacker.getShip().getStrength()*/ - this->defesiveAbilityLevel) / 2;
     //attempt to avoid / take damage
     if (useCombatMauver(attacker)){
         //successful dogde
@@ -325,4 +332,5 @@ void Playership::AverageSetup(){
     this->cargoCapacity = randNumGen(40, 70);
     this->fuelEfficiency = randNumGen(40, 70);
 }
+
 

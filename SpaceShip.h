@@ -3,8 +3,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Officer.h"
 #include "SpaceSector.h"
+#include "Officer.h"
+
 class SpaceShip
 {
     /* 
@@ -44,6 +45,12 @@ class SpaceShip
         int getMoney();
         #pragma endregion 
     private:
+};
+
+class SpaceShipEncounter : public SpaceShip, public SpaceSector
+{
+public:
+    SpaceShipEncounter();
 };
 
 class Playership : public SpaceShip
@@ -87,13 +94,13 @@ public:
     void useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
     void useTrade(SpaceSector &trader);     //use captain, rng chance of success
     void useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
-    bool useCombatMauver(SpaceshipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
-    void useEscape(SpaceshipEncounter &attack);       //use engineer, pilot, speed, agility, takes attacker's speed
+    bool useCombatMauver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
+    void useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
     void useSystemsRecovery();               //use engineer, activates on travel
     void useMine(PlanetEncounter &target);   //use miner stats.
-    void useAttack(SpaceshipEncounter &target);       //uses weaponsSmith and pilot, takes targets defensive stats.
+    void useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
     void upgradeDefense();                   //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
-    void takeDamageFrom(SpaceshipEncounter &attacker);
+    void takeDamageFrom(SpaceShipEncounter &attacker);
 
 private:
     void setupShip();
@@ -110,9 +117,6 @@ private:
     //some sort of create new officer function which find the LAST officer to have died in that job.
 };
 
-class NPCship : public SpaceShip
-{
-};
 #endif
 
 //TODO:

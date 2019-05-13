@@ -3,6 +3,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
+class NPCship;
+
 class Race
 {
     int combatManuverabilityLevel;
@@ -56,16 +59,6 @@ class SpaceSector
         static int getSecotorCount();
 };
 
-class SpaceshipEncounter : public SpaceSector
-{
-    NPCship ship;
-    public:
-        NPCship getShip();
-        void displaySector();
-
-
-};
-
 class PlanetEncounter : public SpaceSector
 {
 
@@ -75,7 +68,6 @@ class PlanetEncounter : public SpaceSector
 
 class TradingStation : public SpaceSector
 {
-
     public:
         TradingStation();
 };

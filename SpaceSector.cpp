@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include "SpaceSector.h"
-#include "SpaceShip.h"
 #include "functions.h"
 
 Race::Race(){
@@ -113,9 +112,12 @@ std::string Race::getType(){
     this->type;
 }
 
-
 SpaceSector::SpaceSector(){
 
+}
+
+Race SpaceSector::getRace(){
+    return this->race;
 }
 
 PlanetEncounter::PlanetEncounter() : SpaceSector(){
