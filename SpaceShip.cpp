@@ -101,15 +101,21 @@ void Playership::setupShip(){
     }
 }
 
-void Playership::addOfficer(Officer newOfficer){
-
+void Playership::useDiplomacy(SpaceSector &aggressor){
+    Officer captain = findOfficer("captain");
+    int capLvl = captain.getSkillLevel();
+    int chance = (capLvl + aggressor.getRace().getDiplomacyLevel())/2;
+    if (chance >= randNumGen(0,100)){
+        std::cout << "negotiations successful!! pay resources and other things happen\n"; 
+    }
 }
-
-void Playership::useDiplomacy(SpaceShip &aggressor){
-
-}
-void Playership::useTrade(SpaceShip &tradeShip){
-
+void Playership::useTrade(SpaceSector &trader){
+    Officer captain = findOfficer("captain");
+    int capLvl = captain.getSkillLevel();
+    int chance = (capLvl + trader.getRace().getTradabilityLevel())/2;
+    if (chance >= randNumGen(0,100)){
+        std::cout << "trade successful!! pay resources and other things\n";
+    }
 }
 void Playership::useTravel(){
     //check for dead officers, replace dead officers etc
@@ -117,26 +123,124 @@ void Playership::useTravel(){
     //
 
 }
-void Playership::useCombatMauver(SpaceShip &target){
+bool Playership::useCombatMauver(SpaceshipEncounter &attacker){
+    Officer pilot = findOfficer("pilot");
+    Officer engi = findOfficer("engineer");
+    int pilotLvl = pilot.getSkillLevel();
+    int engiLvl = engi.getSkillLevel();
+    int chance = (engiLvl + pilotLvl + this->agility + this->speed - attacker.getRace().getOffensiveAbilityLevel())/3;
+    if (chance >= randNumGen(0,100)){
+        std::cout << "successfull dodge\n";
+        return true;
+    }
+    return false;
 
 }
-void Playership::useEscape(SpaceShip &enemy){
-
+void Playership::useEscape(SpaceshipEncounter &attacker){
+    int pilotLvl = findOfficer("pilot").getSkillLevel();
+    int engiLvl = findOfficer("engineer").getSkillLevel();
+    int chance = (engiLvl + pilotLvl + this->speed + this->agility - (attacker.getRace().getOffensiveAbilityLevel() + attacker.getShip().getSpeed()))/3;
+    if (chance >= randNumGen(0,100)){
+        std::cout << "successful escape\n";
+        //SOME GLOBAL FUNCTION INVOLVING ESCAPE
+    }
 }
 void Playership::useSystemsRecovery(){
-
+    int engiLvl = findOfficer("engineer").getSkillLevel();
+    if (engiLvl >= randNumGen(0,100)){
+        std::cout << "successful repairs\n";
+    }
 }
 void Playership::useMine(PlanetEncounter &planet){
-
+    int minerLvl = findOfficer("miner").getSkillLevel();
+    int chance = (minerLvl + this->miningPower)/1.5;
+    if (chance >= randNumGen(0,100)){
+        std::cout << "successful mine, now determine how much loot u get\n";
+    }
 }
-void Playership::useAttack(SpaceShip &target){
-
+void Playership::useAttack(SpaceshipEncounter &target){
+    int weaponLvl = findOfficer("weapons").getSkillLevel() + this->strength;
+    int chance = (weaponLvl - target.getRace().getCombatManuverabilityLevel())/1.5;
+    if (chance >= randNumGen(0,100)){
+        std::cout << "successful attack, things involving lowering enemy hp, arm, shld\n";
+    }
 }
 void Playership::upgradeDefense(){
-
+    int engiLvl = findOfficer("engineer").getSkillLevel();
+    int weaponsLvl = findOfficer("weapons").getSkillLevel();
+    int chance = (engiLvl + weaponsLvl)/2;
+    if (chance >= randNumGen(0,100)){
+        std::cout << "new defesive ability level hsa been set to: " << chance << '\n';
+    }
+    
 }
-void Playership::takeDamageFrom(SpaceShip enemy){
+void Playership::takeDamageFrom(SpaceshipEncounter &attacker){
+    //get appropriate stats
+    
+    //determine damage taken
+    int damage = (attacker.getRace().getOffensiveAbilityLevel() + attacker.getShip().getStrength() - this->defesiveAbilityLevel)/2;
+    //attempt to avoid / take damage
+    if (useCombatMauver(attacker)){
+        //successful dogde
+        damage = 0;
+    } else if (this->health < 20) {//try to escape
+        useEscape(attacker);
+        //the above calls some global escape function to move to a new sector
+    }
 
+    //if ship isnt destroyed apply damage to officers
+    if (this->health <= 0){
+        //game over
+        //SOME GLOBAL FUNCTION TO DISPLAY GAME RESULTS
+    } else {
+        if(shield <= 0 && armour <= 0){
+            //deal damamge to officers
+            for (int i = 0; i < officers.size(); i++){
+                officers[i].takeDamage(damage);
+            }
+            //rng kill off crew :(
+            damageCrew();
+        }
+        //check for dead (if dead replace)
+        checkForDead();
+    }
+}
+
+void Playership::addToCrew(){
+    if (50 >= randNumGen(0,100)){
+        std::cout << "your ship has picked up a new crew member\n";
+        this->crew++;
+    }
+}
+void Playership::damageCrew(){
+    if (50 >= randNumGen(0,100)){
+        std::cout << "a crew member has died\n";
+        this->crew--;
+    }
+}
+void Playership::checkForDead(){
+    for(Officer currOfficer : officers){
+        if (currOfficer.getIsDead()){
+            //replace with a new one 
+            std::cout << "Officer " << currOfficer.getRank() << " " << currOfficer.getName() << " has died\n";
+            if (this->crew >0){
+                //create new Officer
+                //SOME GLOBAL FUNCTION
+                //addOfficer(newOfficer);
+            }
+        }
+    }
+}
+
+int Playership::addOfficer(Officer newOfficer){
+    for (Officer currOfficer : this->officers){
+        if (newOfficer.getJob() == currOfficer.getJob() && !currOfficer.getIsDead()){
+            std::cerr << "Error: there is already an officer in this position\n";
+            return 0;
+        }
+    }
+    officers.push_back(newOfficer);
+    return 0;
 }
 
 Officer Playership::findOfficer(std::string job){

@@ -15,7 +15,7 @@ class SpaceShip
         int strength;
         int health;
         int shield;
-        int armour;
+        int armour;//"bonus" health protects officers
         int fuel;
         int food;
         int agility;
@@ -65,6 +65,12 @@ class Playership : public SpaceShip
     int systemsRecoveryLevel;
     int miningAbilityLevel;
     int offensiveAbilityLevel;
+    int lowmin = 0;
+    int lowmax = 40;
+    int midmin = 41; 
+    int midmax = 70;
+    int highmin = 71; 
+    int highmax = 100;
     std::string shipType;
     std::vector<Officer> officers;
 public:
@@ -78,17 +84,16 @@ public:
     std::string getShipType();
     std::vector<Officer> getOfficers(Officer newOfficer);
     //TODO: Make sure all abilities are being defined here
-    void addOfficer(Officer newOfficer);     //in the case of an officer being replaced
-    void useDiplomacy(SpaceShip &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
-    void useTrade(SpaceShip &tradeShip);     //use captain, rng chance of success
+    void useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
+    void useTrade(SpaceSector &trader);     //use captain, rng chance of success
     void useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
-    void useCombatMauver(SpaceShip &target); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
-    void useEscape(SpaceShip &target);       //use engineer, pilot, speed, agility, takes attacker's speed
+    bool useCombatMauver(SpaceshipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
+    void useEscape(SpaceshipEncounter &attack);       //use engineer, pilot, speed, agility, takes attacker's speed
     void useSystemsRecovery();               //use engineer, activates on travel
     void useMine(PlanetEncounter &target);   //use miner stats.
-    void useAttack(SpaceShip &target);       //uses weaponsSmith and pilot, takes targets defensive stats.
+    void useAttack(SpaceshipEncounter &target);       //uses weaponsSmith and pilot, takes targets defensive stats.
     void upgradeDefense();                   //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
-    void takeDamageFrom(SpaceShip enemy);
+    void takeDamageFrom(SpaceshipEncounter &attacker);
 
 private:
     void setupShip();
@@ -98,6 +103,10 @@ private:
     void OneHitSetup();
     void AverageSetup();
     Officer findOfficer(std::string job);
+    void checkForDead();
+    void addToCrew();                       //chance to pick up crew members from planets, ships and trading stations.
+    void damageCrew();                      //chance to kill crew members
+    int addOfficer(Officer newOfficer);     //in the case of an officer being replaced
     //some sort of create new officer function which find the LAST officer to have died in that job.
 };
 

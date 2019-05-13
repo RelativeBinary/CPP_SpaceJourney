@@ -62,13 +62,14 @@ std::string Officer::getJob(){
     return this->job;
 }
 
-void Officer::recieveDamage(int damage){
+void Officer::takeDamage(int damage){
     std::cout << damage << " damage dealt on " << this->name << '\n';
     this->health -= damage;
     std::cout << this->name << "'s hp is now: " << this->health << "hp\n";
 
     if (this->health <= 0){
         std::cout << this->name << " was fatally wounded.\n";
+        isDead = true;
     }
 }
 

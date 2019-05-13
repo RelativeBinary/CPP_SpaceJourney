@@ -19,7 +19,7 @@ class Officer
         std::string getName();                  //used for documenting purposes
         std::string getRank();                  //used to determine what ability stats are affected
         std::string getJob();                   //used to determine what ability stats are affected
-        void recieveDamage(int damage);         //checks if damage is > 0 and if officer will take extra damage, if health is <= 0 after taking damage then set isDead to true.
+        void takeDamage(int damage);         //checks if damage is > 0 and if officer will take extra damage, if health is <= 0 after taking damage then set isDead to true.
         void restoreHealth(int damage);                   //when systems recovery is used
         void levelUpSkill(int exp);                    //when enemies are defeated and if the officer didnt die they will receive rng exp
     private:

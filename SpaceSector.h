@@ -5,25 +5,65 @@
 #include <vector>
 class Race
 {
-    int diplomacyLevel, tradabilityLevel, travelEfficiencyLevel, combatManuverabilityLevel, evasionAbilityLevel, defesiveAbilityLevel, systemsRecoveryLevel, miningAbilityLevel, offensiveAbilityLevel;
-    std::string race, type;
+    int combatManuverabilityLevel;
+    int offensiveAbilityLevel;
+    int defesiveAbilityLevel;
+    int systemsRecoveryLevel;
+    int evasionAbilityLevel;
+    int tradabilityLevel;
+    int diplomacyLevel;
+    std::string type;
+    int lowmin = 0;
+    int lowmax = 40;
+    int midmin = 41; 
+    int midmax = 70;
+    int highmin = 71; 
+    int highmax = 100;
     public:
         Race();
-        Race(int diploLvl, int tradeLvl, int  travelEffLvl, int  combatManuLvl, int  evasionLvl, int  defLvl, int sysRecoverLvl, int  mineLvl, int offLvl);
+        Race(std::string type);
+        int getCombatManuverabilityLevel(); 
+        int getTravelEfficiencyLevel();
+        int getOffensiveAbilityLevel();
+        int getDefesiveAbilityLevel();
+        int getSystemsRecoveryLevel();
+        int getEvasionAbilityLevel();
+        int getMiningAbilityLevel();
+        int getTradabilityLevel();
+        int getDiplomacyLevel();
+        std::string getType();
+    private:
+        void setupStats(std::string type);
+        void  hostileSetup();
+        void  minerSetup();
+        void  passiveSetup();
+        void  defensiveSetup();
+        void  averageSetup();
+
 };
 
 class SpaceSector
 {
-    Race race;
-    std::string type;
-    int sectorCount; //constant
+    protected:
+        Race race;
+        std::string type;
+        static int sectorCount; //constant
     public:
         SpaceSector();//sectorCount auto incremented
         SpaceSector(Race reace, std::string type);
+        Race getRace();
+        std::string getType();
+        static int getSecotorCount();
 };
 
 class SpaceshipEncounter : public SpaceSector
 {
+    NPCship ship;
+    public:
+        NPCship getShip();
+        void displaySector();
+
+
 };
 
 class PlanetEncounter : public SpaceSector
