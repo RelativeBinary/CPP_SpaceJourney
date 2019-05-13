@@ -143,21 +143,44 @@ void Playership::setupShip(){
     }
 }
 
-void Playership::useDiplomacy(SpaceSector &aggressor){ //INCOMPLETE
+bool Playership::useDiplomacy(SpaceSector &aggressor){
     Officer captain = findOfficer("captain");
     int capLvl = captain.getSkillLevel();
     int chance = (capLvl + aggressor.getRace().getDiplomacyLevel())/2;
     if (chance >= randNumGen(0,100)){
-        std::cout << "negotiations successful!! pay resources and other things happen\n"; 
+        std::cout << "negotiations are being attempted\n"; 
+        if (this->money > 10 && this->resources > 10){
+            money -= 10;
+            resources -= 10;
+            std::cout << "negotiations successful!\n";
+            return true;
+        } else {
+            std::cout << "negotiations failed, you didnt have enough resources!\n";
+            return false;
+        }
     }
+    std::cout << "negotiations failed!!\n";
+    return false;
 }
-void Playership::useTrade(SpaceSector &trader){
+void Playership::useTrade(SpaceSector &trader){//only works with planets and trading stations
     Officer captain = findOfficer("captain");
     int capLvl = captain.getSkillLevel();
     int chance = (capLvl + trader.getRace().getTradabilityLevel())/2;
     if (chance >= randNumGen(0,100)){
-        std::cout << "trade successful!! pay resources and other things\n";
+        std::cout << "attempting to trade\n";
+        if (this->food <= 10 && this->money >= 10){
+            std::cout << "buying food\n";
+            this->money -= 10;
+            this->food += 10;
+        } else if (this->money < 10){
+            std::cout << "no money to buy food\n";
+        } else if (this->food >= 10){
+            std::cout << "no need to buy food\n";
+        }
+        std::cout << "topping fuel up\n";
+        this->fuel += 20;
     }
+    std::cout << "failed to trade\n";
 }
 bool Playership::hasFuel(){
     if (this->fuel > 0){
@@ -278,7 +301,7 @@ bool Playership::useAttack(SpaceShipEncounter &target)
     std::cout << "attack failed\n";
     return false;
 }
-void Playership::reallocateDefense(){ //INCOMPLETE
+void Playership::reallocateDefense(){ //used after addOfficer and officer is of job "engi" or "weapons" 
     int engiLvl = findOfficer("engineer").getSkillLevel();
     int weaponsLvl = findOfficer("weapons").getSkillLevel();
     int chance = (engiLvl + weaponsLvl)/2;

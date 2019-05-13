@@ -96,12 +96,12 @@ public:
     std::string getShipType();
     std::vector<Officer> getOfficers(Officer newOfficer);
     //TODO: Make sure all abilities are being defined here
-    void useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
     void useTrade(SpaceSector &trader);     //use captain, rng chance of success
+    void useSystemsRecovery();               //use engineer, activates on travel
+    bool useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
     bool useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
     bool useCombatMauver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
     bool useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
-    void useSystemsRecovery();               //use engineer, activates on travel
     void useMine(PlanetEncounter &target);   //use miner stats.
     bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
     bool takeDamageFrom(SpaceShipEncounter &attacker);
