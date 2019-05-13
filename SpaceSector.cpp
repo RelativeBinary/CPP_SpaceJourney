@@ -4,7 +4,8 @@
 #include "SpaceSector.h"
 #include "functions.h"
 
-Race::Race(){
+Race::Race()
+{
     this->combatManuverabilityLevel = 50; 
     this->offensiveAbilityLevel = 50;
     this->defesiveAbilityLevel = 50;
@@ -15,11 +16,13 @@ Race::Race(){
     this->type = "constructor";
 }
 
-Race::Race(std::string type){
+Race::Race(std::string type)
+{
     setupStats(type);
 }
 
-void Race::setupStats(std::string type){
+void Race::setupStats(std::string type)
+{
     if (type == "Solaris"){
         hostileSetup();
     }else if (type == "Scar"){

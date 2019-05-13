@@ -6,7 +6,7 @@
 #include "SpaceSector.h"
 #include "Officer.h"
 
-class SpaceShip
+class SpaceShip //COMPLETE
 {
     /* 
         Core Stats: based on shiptype OR rng based on race. (strength, health, shield, armour, fuel, food, agility, speed, resources, money)
@@ -23,7 +23,12 @@ class SpaceShip
         int speed;
         int resources;
         int money;
-
+        int lowmin = 0;
+        int lowmax = 40;
+        int midmin = 41;
+        int midmax = 70;
+        int highmin = 71;
+        int highmax = 100;
     public:
         /*
             raising any stats should only occur through the abilities that 
@@ -31,8 +36,7 @@ class SpaceShip
             to raise health, shields and armour.  
         */
         SpaceShip();
-        SpaceShip(int strgth , int health, int shield, int armour, int fuel, int food, int agility, int speed, int resources, int money);
-        #pragma region //getters and setters
+        #pragma region
         int getStrength();
         int getHealth();
         int getShield();
@@ -47,13 +51,20 @@ class SpaceShip
     private:
 };
 
-class SpaceShipEncounter : public SpaceShip, public SpaceSector
+class SpaceShipEncounter : public SpaceShip, public SpaceSector //INCOMPLETE
 {
 public:
     SpaceShipEncounter();
+private:
+    void solarisShipSetup();
+    void scarShipSetup();
+    void celestialShipSetup();
+    void galvamekShipSetup();
+    void humanShipSetup();
+
 };
 
-class Playership : public SpaceShip
+class Playership : public SpaceShip //INCOMPLETE
 {
     /* 
         Core Stats: based on rng and shipType(strength, health, shield, armour, fuel, food, agility, speed, resources, money, crew, cargoCapacity, miningPower, fuelEfficiency)
@@ -72,12 +83,6 @@ class Playership : public SpaceShip
     int systemsRecoveryLevel;
     int miningAbilityLevel;
     int offensiveAbilityLevel;
-    int lowmin = 0;
-    int lowmax = 40;
-    int midmin = 41; 
-    int midmax = 70;
-    int highmin = 71; 
-    int highmax = 100;
     std::string shipType;
     std::vector<Officer> officers;
 public:
@@ -93,16 +98,15 @@ public:
     //TODO: Make sure all abilities are being defined here
     void useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
     void useTrade(SpaceSector &trader);     //use captain, rng chance of success
-    void useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
+    bool useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
     bool useCombatMauver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
-    void useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
+    bool useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
     void useSystemsRecovery();               //use engineer, activates on travel
     void useMine(PlanetEncounter &target);   //use miner stats.
-    void useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
-    void upgradeDefense();                   //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
-    void takeDamageFrom(SpaceShipEncounter &attacker);
-
+    bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
+    bool takeDamageFrom(SpaceShipEncounter &attacker);
 private:
+    void reallocateDefense(); //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
     void setupShip();
     void OffensiveSetup();
     void MinerSetup();
@@ -115,11 +119,8 @@ private:
     void damageCrew();                      //chance to kill crew members
     int addOfficer(Officer newOfficer);     //in the case of an officer being replaced
     //some sort of create new officer function which find the LAST officer to have died in that job.
+    void checkFood();
+    bool hasFuel();
 };
 
 #endif
-
-//TODO:
-/*
-- Nothing to see here
-*/

@@ -4,9 +4,7 @@
 #include <string>
 #include <vector>
 
-class NPCship;
-
-class Race
+class Race //COMPLETE
 {
     int combatManuverabilityLevel;
     int offensiveAbilityLevel;
@@ -45,7 +43,7 @@ class Race
 
 };
 
-class SpaceSector
+class SpaceSector //COMPLETE
 {
     protected:
         Race race;
@@ -53,15 +51,15 @@ class SpaceSector
         static int sectorCount; //constant
     public:
         SpaceSector();//sectorCount auto incremented
-        SpaceSector(Race reace, std::string type);
+        SpaceSector(Race race, std::string type);
         Race getRace();
         std::string getType();
         static int getSecotorCount();
 };
 
+//INCOMPLETE
 class PlanetEncounter : public SpaceSector
 {
-
     public:
         PlanetEncounter();
 };
@@ -87,9 +85,3 @@ class EmptySector : public SpaceSector
         EmptySector();      //do nothing
 };
 #endif
-
-//TODO:
-/*
-- Interface Behaviours for trading
-- POSSIBLE behaviours for combat
-*/
