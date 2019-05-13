@@ -74,14 +74,14 @@ Playership::Playership()
 }
 
 Playership::Playership(std::vector<Officer> officers){
-    //setup ship internally
+    //sets up ship internally
     this->shipType = determineShipType();
-    this->officers = officers; //POSSIBLE: Internal officers setup function, very cool
+    this->officers = officers; //TODO: Global function that sets all the officers
     setupShip();
 }
 
 Playership::Playership(std::string type, std::vector<Officer> officers){
-    //setup ship externally
+    //sets up ship based from external influence
     this->shipType = type;
     this->officers = officers;
     setupShip();
@@ -118,23 +118,32 @@ void Playership::useTrade(SpaceSector &trader){
     }
 }
 void Playership::useTravel(){
-    //check for dead officers, replace dead officers etc
-    //perform systems recovery
-    //
-
+    //get appropriate stats
+    int pilotLvl = findOfficer("pilot").getSkillLevel();
+    int engiLvl = findOfficer("engineer").getSkillLevel();
+    //determine fuel and food costs(if there is no food left then all officers take famine damage)
+    int chance = (pilotLvl + engiLvl + this->fuelEfficiency)/3;
+    if (chance >= randNumGen(0,100)){
+        fuel -= 5;
+        food -= 5;
+        std::cout << "Travel used. Fuel and Food lowered by 5 to: " << this->fuel << " and " << this->food << ".\n";
+    } else {
+        fuel -= 10;
+        food -= 10;
+        std::cout << "Travel used. Fuel and Food lowered by 10 to: " << this->fuel << " and " << this->food << ".\n";
+    }
+    //SOME GLOBAL FUNCTION TO MOVE TO THE NEXT SPACESECTOR
 }
 bool Playership::useCombatMauver(SpaceshipEncounter &attacker){
-    Officer pilot = findOfficer("pilot");
-    Officer engi = findOfficer("engineer");
-    int pilotLvl = pilot.getSkillLevel();
-    int engiLvl = engi.getSkillLevel();
+    int pilotLvl = findOfficer("pilot").getSkillLevel();
+    int engiLvl = findOfficer("engineer").getSkillLevel();
     int chance = (engiLvl + pilotLvl + this->agility + this->speed - attacker.getRace().getOffensiveAbilityLevel())/3;
     if (chance >= randNumGen(0,100)){
-        std::cout << "successfull dodge\n";
+        std::cout << "Attack was successfully evaded.\n";
         return true;
     }
+    std::cout << "Unable to evade attack. \n";
     return false;
-
 }
 void Playership::useEscape(SpaceshipEncounter &attacker){
     int pilotLvl = findOfficer("pilot").getSkillLevel();
@@ -142,6 +151,7 @@ void Playership::useEscape(SpaceshipEncounter &attacker){
     int chance = (engiLvl + pilotLvl + this->speed + this->agility - (attacker.getRace().getOffensiveAbilityLevel() + attacker.getShip().getSpeed()))/3;
     if (chance >= randNumGen(0,100)){
         std::cout << "successful escape\n";
+        //determine fuel and food costs
         //SOME GLOBAL FUNCTION INVOLVING ESCAPE
     }
 }
