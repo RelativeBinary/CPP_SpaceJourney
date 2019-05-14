@@ -1,16 +1,18 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include "SpaceShip.h"
 #include "functions.h"
 
 SpaceShip::SpaceShip(){
+    std::cout << "SpaceShip constructor\n";
     fuel = 50;
     food = 50;
     resources = 50;
     money = 50;
 }
-
+#pragma region //getters
 int SpaceShip::getStrength(){
     return this->strength;
 }
@@ -41,9 +43,26 @@ int SpaceShip::getResources() {
 int SpaceShip::getMoney() {
     return this->money;
 }
+#pragma endregion
+
+void SpaceShip::displaySpaceShip(){
+    std::cout << std::left << std::setw(12) << "Strength: " << std::left << std::setw(12) << this->strength;
+    std::cout << std::left << std::setw(12) << "Health: " << std::left << std::setw(12) << this->health << '\n';
+    std::cout << std::left << std::setw(12) << "Shield: " << std::left << std::setw(12) << this->shield;
+    std::cout << std::left << std::setw(12) << "Armour: " << std::left << std::setw(12) << this->armour << '\n'; //"bonus" health protects officers
+    std::cout << std::left << std::setw(12) << "Fuel: " << std::left << std::setw(12) << this->fuel;
+    std::cout << std::left << std::setw(12) << "Food: " << std::left << std::setw(12) << this->food << '\n';
+    std::cout << std::left << std::setw(12) << "Agility: " << std::left << std::setw(12) << this->agility;
+    std::cout << std::left << std::setw(12) << "Speed: " << std::left << std::setw(12) << this->speed << '\n';
+    std::cout << std::left << std::setw(12) << "Resources: " << std::left << std::setw(12) << this->resources;
+    std::cout << std::left << std::setw(12) << "Money: " << std::left << std::setw(12) << this->money << "\n\n";
+}
 
 SpaceShipEncounter::SpaceShipEncounter(){
-    if (this->getRace().getType() == "Solaris") {
+    std::cout << "SpaceShipEncounter constructor\n";
+    this->type = "SpaceShipEncounter";
+    if (this->getRace().getType() == "Solaris")
+    {
         solarisShipSetup();
     }
     else if (this->getRace().getType() == "Scar")
@@ -61,9 +80,12 @@ SpaceShipEncounter::SpaceShipEncounter(){
     else if (this->getRace().getType() == "Human")
     {
         humanShipSetup();
+    } else {
+        std::cerr << "ERROR: no race type found\n";
     }
 }
-//TODO: Setup raceshiptypes
+
+#pragma region//TODO: Setup raceshiptypes
 void SpaceShipEncounter::celestialShipSetup(){
     this->speed = randNumGen(lowmin, lowmax);
     this->health = randNumGen(lowmin, lowmax);
@@ -104,9 +126,10 @@ void SpaceShipEncounter::scarShipSetup(){
     this->agility = randNumGen(lowmin, lowmax);
     this->strength = randNumGen(lowmin, lowmax);
 }
+#pragma endregion
 
-Playership::Playership() 
-{
+Playership::Playership() {
+    std::cout << "Playership constructor\n";
     int crew = 0;
     int cargoCapacity = 0; //out of 100
     int mainingPower = 0;  // out of 100
@@ -116,17 +139,39 @@ Playership::Playership()
 }
 
 Playership::Playership(std::vector<Officer> officers){
+    std::cout << "Playership constructor\n";
     //sets up ship internally
     this->shipType = determineShipType();
     this->officers = officers; //TODO: Global function that sets all the officers
     setupShip();
 }
 
-Playership::Playership(std::string type, std::vector<Officer> officers){
+Playership::Playership(std::string type, std::vector<Officer> officers){//if you would like to run a specific ship rather than a random one.
+    std::cout << "Playership constructor\n";
     //sets up ship based from external influence
     this->shipType = type;
     this->officers = officers;
     setupShip();
+}
+
+void Playership::displayPlayership(){//INCOMPLETE
+    displaySpaceShip();
+    std::cout << std::left << std::setw(12) << "cargoCap:" << std::left << std::setw(12) << this->cargoCapacity;
+    std::cout << std::left << std::setw(12) << "miningPow:" << std::left << std::setw(12) << this->miningPower << '\n';
+    std::cout << std::left << std::setw(12) << "fuelEff:" << std::left << std::setw(12) << this->fuelEfficiency;
+    std::cout << std::left << std::setw(12) << "diplomacyLvl:" << std::left << std::setw(12) << this->diplomacyLevel << '\n';
+    std::cout << std::left << std::setw(12) << "tradeLvl:" << std::left << std::setw(12) << this->tradabilityLevel;
+    std::cout << std::left << std::setw(12) << "travelEffLvl:" << std::left << std::setw(12) << this->travelEfficiencyLevel << '\n';
+    std::cout << std::left << std::setw(12) << "combatManuverLvl:" << std::left << std::setw(12) << this->combatManuverabilityLevel;
+    std::cout << std::left << std::setw(12) << "evasionLvl:" << std::left << std::setw(12) << this->evasionAbilityLevel << '\n';
+    std::cout << std::left << std::setw(12) << "defesiveLvl:" << std::left << std::setw(12) << this->defesiveAbilityLevel;
+    std::cout << std::left << std::setw(12) << "sysRecoveryLvl:" << std::left << std::setw(12) << this->systemsRecoveryLevel << '\n';
+    std::cout << std::left << std::setw(12) << "miningLvl:" << std::left << std::setw(12) << this->miningAbilityLevel;
+    std::cout << std::left << std::setw(12) << "offensiveLvl:" << std::left << std::setw(12) << this->offensiveAbilityLevel << '\n';
+    std::cout << std::left << std::setw(12) << "crew:"<< std::left << std::setw(12)  << this->crew;
+    std::cout << std::left << std::setw(12) << "shipType: " << std::left << std::setw(12) << this->shipType << '\n';
+    std::cout << "displaying officers:\n";
+    //dont use for each loop
 }
 
 void Playership::setupShip(){
@@ -162,8 +207,8 @@ bool Playership::useDiplomacy(SpaceSector &aggressor){
     std::cout << "negotiations failed!!\n";
     return false;
 }
-void Playership::useTrade(SpaceSector &trader)//only works with planets and trading stations
-{
+
+void Playership::useTrade(SpaceSector &trader){ //only works with planets and trading stations
     Officer captain = findOfficer("captain");
     int capLvl = captain.getSkillLevel();
     int chance = (capLvl + trader.getRace().getTradabilityLevel())/2;
@@ -190,8 +235,7 @@ bool Playership::hasFuel(){
     return false;
 }
 
-bool Playership::useTravel() //USED IN FUNCTIONS.CPP/H
-{
+bool Playership::useTravel() {//USED IN FUNCTIONS.CPP/H
     //get appropriate stats
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
@@ -201,16 +245,18 @@ bool Playership::useTravel() //USED IN FUNCTIONS.CPP/H
         fuel -= 1;
         food -= 1;
         std::cout << "Travel used. Fuel and Food lowered by 1 to: " << this->fuel << " and " << this->food << ".\n";
+        addToCrew();
         return hasFuel();
     } else {
         fuel -= 5;
         food -= 5;
         std::cout << "Travel used. Fuel and Food lowered by 5 to: " << this->fuel << " and " << this->food << ".\n";
+        addToCrew();
         return hasFuel();
     }
 }
-bool Playership::useEscape(SpaceShipEncounter &attacker) //TBU IN FUNCTIONS if HP is low then attemp escape, if that fails then takeDamage();
-{
+
+bool Playership::useEscape(SpaceShipEncounter &attacker) {//TBU IN FUNCTIONS if HP is low then attemp escape, if that fails then takeDamage();
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
     int chance = (engiLvl + pilotLvl + this->speed + this->agility - (attacker.getRace().getOffensiveAbilityLevel())) / 3;
@@ -222,8 +268,8 @@ bool Playership::useEscape(SpaceShipEncounter &attacker) //TBU IN FUNCTIONS if H
     std::cout << "escape failed\n";
     return false;
 }
-bool Playership::useCombatMauver(SpaceShipEncounter &attacker)
-{
+
+bool Playership::useCombatManuver(SpaceShipEncounter &attacker){//used in takeDamage()
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
     int chance = (engiLvl + pilotLvl + this->agility + this->speed - attacker.getRace().getOffensiveAbilityLevel())/3;
@@ -234,12 +280,12 @@ bool Playership::useCombatMauver(SpaceShipEncounter &attacker)
     std::cout << "Unable to evade attack. \n";
     return false;
 }
-bool Playership::takeDamageFrom(SpaceShipEncounter &attacker) //TBU IN FUNCTIONS
-{
+
+bool Playership::takeDamageFrom(SpaceShipEncounter &attacker) {//TBU IN FUNCTIONS
     //determine damage taken
     int damage = (attacker.getRace().getOffensiveAbilityLevel() + attacker.getStrength() - this->defesiveAbilityLevel) / 2;
     //attempt to avoid / take damage
-    if (useCombatMauver(attacker))
+    if (useCombatManuver(attacker))
     {
         //successful evasion
         damage = 0;
@@ -264,8 +310,40 @@ bool Playership::takeDamageFrom(SpaceShipEncounter &attacker) //TBU IN FUNCTIONS
     std::cout << "ship has taken damage\n";
 }
 
-void Playership::useSystemsRecovery()
-{
+void Playership::checkForDead(){ //used in takeDamage();
+    for (int i = 0; i < officers.size(); i++){
+        Officer temp = officers[i];
+        if (temp.getIsDead()){
+            if (crew > 0){
+                //create new officer of lesser skill
+                Officer newOfficer(temp.getJob(), randNumGen(0, temp.getSkillLevel()));
+                //move dead officer into deadOfficers list
+                this->deadofficers.push_back(temp);
+                this->officers.erase(officers.begin() + i);
+                addOfficer(newOfficer);
+                if (newOfficer.getJob()== "engineer" || newOfficer.getJob() == "weapons"){
+                    recalculateDefense();
+                }
+            }
+        }
+    }
+}
+
+int Playership::addOfficer(Officer newOfficer){// used in checkForDead()
+    for (Officer currOfficer : this->officers)
+    {
+        if (newOfficer.getJob() == currOfficer.getJob() && !currOfficer.getIsDead())
+        {
+            std::cerr << "Error: there is already an officer in this position\n";
+            return 0;
+        }
+    }
+    officers.push_back(newOfficer);
+    std::cout << "new officer added\n";
+    return 0;
+}
+
+void Playership::useSystemsRecovery(){
     int engiLvl = findOfficer("engineer").getSkillLevel();
     if (engiLvl >= randNumGen(0,100)){
         this->health += engiLvl;
@@ -274,8 +352,8 @@ void Playership::useSystemsRecovery()
         std::cout << "successful repairs\n";
     }
 }
-void Playership::useMine(PlanetEncounter &planet)
-{
+
+void Playership::useMine(PlanetEncounter &planet){
     int minerLvl = findOfficer("miner").getSkillLevel();
     int chance = (minerLvl + this->miningPower)/1.5;
     if (chance >= randNumGen(0,100)){
@@ -291,8 +369,8 @@ void Playership::useMine(PlanetEncounter &planet)
     }
     
 }
-bool Playership::useAttack(SpaceShipEncounter &target)
-{
+
+bool Playership::useAttack(SpaceShipEncounter &target){
     int weaponLvl = findOfficer("weapons").getSkillLevel() + this->strength;
     int chance = (weaponLvl - target.getRace().getCombatManuverabilityLevel())/1.5;
     if (chance >= randNumGen(0,100)){
@@ -302,6 +380,7 @@ bool Playership::useAttack(SpaceShipEncounter &target)
     std::cout << "attack failed\n";
     return false;
 }
+
 void Playership::recalculateDefense(){ //used after addOfficer and officer is of job "engi" or "weapons" 
     int engiLvl = findOfficer("engineer").getSkillLevel();
     int weaponsLvl = findOfficer("weapons").getSkillLevel();
@@ -313,53 +392,23 @@ void Playership::recalculateDefense(){ //used after addOfficer and officer is of
     
 }
 
-void Playership::addToCrew()
-{ 
+void Playership::addToCrew(){ 
+    std::cout << "testing add to crew \n";
     if (50 >= randNumGen(0,100)){
         std::cout << "your ship has picked up a new crew member\n";
         this->crew++;
     }
 }
 
-void Playership::damageCrew(){
+void Playership::damageCrew(){// used in takeDamage
     if (50 >= randNumGen(0,100)){
         std::cout << "a crew member has died\n";
         this->crew--;
     }
 }
 
-void Playership::checkForDead() //INCOMPLETE
-{ 
-    for(Officer currOfficer : officers){
-        if (currOfficer.getIsDead()){
-            //replace with a new one, on death the Officers information will contain the last sector he/she died on.
-            std::cout << "Officer " << currOfficer.getRank() << " " << currOfficer.getName() << " has died\n";
-            if (this->crew >0){
-                //create new Officer
-                //SOME GLOBAL FUNCTION
-                //addOfficer(newOfficer);
-                this->crew--;
-            }
-        }
-    }
-}
-
-int Playership::addOfficer(Officer newOfficer)
-{
-    for (Officer currOfficer : this->officers){
-        if (newOfficer.getJob() == currOfficer.getJob() && !currOfficer.getIsDead()){
-            std::cerr << "Error: there is already an officer in this position\n";
-            return 0;
-        }
-    }
-    officers.push_back(newOfficer);
-    std::cout << "new officer added\n";
-    return 0;
-}
-
-Officer Playership::findOfficer(std::string job)
-{
-    Officer temp("noOfficer", "none", "none", 20, 50, 0);
+Officer Playership::findOfficer(std::string job){//used most abilities
+    Officer temp("none", 0);
 
     for (Officer currOfficer: this->officers){
         if(currOfficer.getJob() == job && !currOfficer.getIsDead()){

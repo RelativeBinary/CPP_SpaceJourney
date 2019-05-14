@@ -1,7 +1,9 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include "Officer.h"
+#include "SpaceSector.h"
 #include "functions.h"
 
 Officer::Officer(){
@@ -14,24 +16,30 @@ Officer::Officer(){
     this->isDead = false;
 }
 
-Officer::Officer(std::string name, std::string rank, std::string job, int age, int health, int skillLevel){
-    this->name = name;
-    this->rank = rank;
+Officer::Officer(std::string job, int skillLevel){
+    std::cout << "\nstart of constructor ";
+    this->name = getRandName();
     this->job = job;
-    this->age = age;
-    this->health = health;
+    this->age = randNumGen(1,100);
+    this->health = randNumGen(50, 100);
     this->skillLevel = skillLevel;
     this->isDead = false;
+    levelUpSkill(0); //checks if the skillLevel given warrents a rank up.
+    std::cout << "end of constructor\n\n";
 }
 
 void Officer::displayOfficer(){
-    std::cout << "Name: " << this->name << '\n';
-    std::cout << "Rank: " << this->rank << '\n';
-    std::cout << "Job: " << this->job << '\n';
-    std::cout << "Age: " << this->age << '\n';
-    std::cout << "Health: " << this->health << '\n';
-    std::cout << "Skill Proficiency: " << this-> skillLevel << '\n';
+    std::cout << std::left << std::setw(8) << "Name: " << std::left << std::setw(12) << this->name;
+    std::cout << std::left << std::setw(8) << "Rank: " << std::left << std::setw(12) << this->rank << '\n';
+    std::cout << std::left << std::setw(8) << "Job: " << std::left << std::setw(12) << this->job;
+    std::cout << std::left << std::setw(8) << "Age: " << std::left << std::setw(12) << this->age << '\n';
+    std::cout << std::left << std::setw(8) << "Health: " << std::left << std::setw(12) << this->health;
+    std::cout << std::left << std::setw(12) << "Skill Proficiency: " << this->skillLevel << '\n';
     std::cout << "Status: " << ((this->isDead) ? "Dead" : "Alive") << '\n';
+    if (this->isDead){
+        std::cout << "Status: Died on sector " << this->sectorOfDeath << '\n';
+    }
+    std::cout <<'\n';
 }
 
 bool Officer::getIsDead() {
@@ -69,15 +77,24 @@ void Officer::takeDamage(int damage){
 
     if (this->health <= 0){
         std::cout << this->name << " was fatally wounded.\n";
-        isDead = true;
+        this->isDead = true;
+        this->sectorOfDeath = SpaceSector::getSectorCount();
+        this->health = 0;
+        std::cout << "Officer has been marked as dead\n ";
     }
 }
 
 void Officer::restoreHealth(int points){
-    std::cout << points << " health resorted on " << this->name << '\n';
-    this->health += points;
-    healthFortuna();
-    std::cout << this->name << "'s hp is now: " << this->health << "hp\n";
+    if (this->health >= 1){
+        std::cout << points << " health resorted on " << this->name << '\n';
+        this->health += points;
+        healthFortuna();
+        std::cout << this->name << "'s hp is now: " << this->health << "hp\n\n";
+    } else {
+        std::cout << this->name << " is dead.\n";
+        this->health = 0;
+        std::cout << "Officer has been marked as dead\n\n";
+    }
 }
     
 void Officer::levelUpSkill(int exp) {
@@ -89,13 +106,13 @@ void Officer::levelUpSkill(int exp) {
     std::cout << "checking officer stats" << '\n';
     std::string rank = this->rank;
     if (lvl >= 90 && rank != "Major"){
-        std::cout << "Officer: " << this->name << " was promoted to Major!\n";
+        std::cout << "Officer: " << this->name << " was promoted to Major!\n\n";
         this->rank = "Major";
     } else if (lvl >= 75 && rank != "Lieutenant Commander"){
-        std::cout << "Officer: " << this->name << " was promoted to Lieutenant Commander\n";
+        std::cout << "Officer: " << this->name << " was promoted to Lieutenant Commander\n\n";
         this->rank = "Lieutenant Commander";
     } else if (lvl >= 50 && rank != "Lieutenant"){
-        std::cout << "Officer: " << this->name << " was promoted to Lieutenant\n";
+        std::cout << "Officer: " << this->name << " was promoted to Lieutenant\n\n";
         this->rank = "Lieutenant";
     }
 

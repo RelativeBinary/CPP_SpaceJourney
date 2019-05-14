@@ -4,16 +4,17 @@
 #include <string>
 #include <vector>
 
-class Race //COMPLETE
-{
-    int combatManuverabilityLevel;
-    int offensiveAbilityLevel;
-    int defesiveAbilityLevel;
-    int systemsRecoveryLevel;
-    int evasionAbilityLevel;
-    int tradabilityLevel;
-    int diplomacyLevel;
-    std::string type;
+class Race {//COMPLETE
+    int combatManuverabilityLevel = 0;
+    int offensiveAbilityLevel = 0;
+    int defesiveAbilityLevel = 0;
+    int systemsRecoveryLevel = 0;
+    int evasionAbilityLevel = 0;
+    int tradabilityLevel = 0;
+    int diplomacyLevel = 0;
+    public:
+    std::string type = "";
+    private:
     int lowmin = 0;
     int lowmax = 40;
     int midmin = 41; 
@@ -23,6 +24,7 @@ class Race //COMPLETE
     public:
         Race();
         Race(std::string type);
+        void displayRace();
         int getCombatManuverabilityLevel(); 
         int getTravelEfficiencyLevel();
         int getOffensiveAbilityLevel();
@@ -43,23 +45,26 @@ class Race //COMPLETE
 
 };
 
-class SpaceSector //COMPLETE
-{
+class SpaceSector {//COMPLETE
     protected:
         Race race;
-        std::string type;
-        static int sectorCount; //constant
+        static int sectorCount;
+        std::string type = "SpaceSector";
     public:
-        SpaceSector();//sectorCount auto incremented
-        SpaceSector(Race race, std::string type);
+        SpaceSector();//sectorCount auto incremented, auto race setup included
         Race getRace();
         std::string getType();
-        static int getSecotorCount();
+        void displaySpaceSector(); //std::cout << "Sector #" << sectorCout << '\n';
+        static int getSectorCount(){
+            return sectorCount;
+        }
+
 };
 
 //INCOMPLETE
 class PlanetEncounter : public SpaceSector
 {
+    int resources;
     public:
         PlanetEncounter();
 };
@@ -72,16 +77,12 @@ class TradingStation : public SpaceSector
 
 class AsteriodBelt : public SpaceSector
 {
-    int resources, damage;
     public: 
         AsteriodBelt();        //should easily be created without need for parameters
     private:
         void calculateStats(); //based on the current sectorcount, higher sectors mean higher damamge but more resources
 };
 
-class EmptySector : public SpaceSector
-{
-    public:
-        EmptySector();      //do nothing
-};
+//empty sector doesnt do anything
+
 #endif

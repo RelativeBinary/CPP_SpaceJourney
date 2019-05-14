@@ -8,9 +8,10 @@ class Officer
     std::string name, rank, job;
     int age, health, skillLevel;
     bool isDead;
+    int sectorOfDeath;
     public:
         Officer();                                                                                        //isDead is auto false
-        Officer(std::string name, std::string rank, std::string job, int age, int health, int skillLevel);//isDead is auto false
+        Officer(std::string job, int skillLevel);//isDead is auto false
         void displayOfficer();                  //used durring simluation
         bool getIsDead();                       //used for documenting purposes and in checking officiers after taking damage, ship will checkForDead after takeDamageFrom func, if there is dead ship will promote a crew member and give appropriate stats and rank based on rng and the dead officer
         int getAge();                           //used for documenting purposes

@@ -13,16 +13,16 @@ class SpaceShip //COMPLETE
         Ability Stats: based on officer skill and rank OR rng based on race for non-player ships.
     */
     protected:
-        int strength;
-        int health;
-        int shield;
-        int armour;//"bonus" health protects officers
-        int fuel;
-        int food;
-        int agility;
-        int speed;
-        int resources;
-        int money;
+        int strength = 0;
+        int health = 0;
+        int shield = 0;
+        int armour = 0; //"bonus" health protects officers
+        int fuel = 0;
+        int food = 0;
+        int agility = 0;
+        int speed = 0;
+        int resources = 0;
+        int money = 0;
         int lowmin = 0;
         int lowmax = 40;
         int midmin = 41;
@@ -47,6 +47,7 @@ class SpaceShip //COMPLETE
         int getSpeed();
         int getResources();
         int getMoney();
+        void displaySpaceShip();
         #pragma endregion 
     private:
 };
@@ -64,12 +65,13 @@ private:
 
 };
 
-class Playership : public SpaceShip //INCOMPLETE
+class Playership : public SpaceShip
 {
     /* 
         Core Stats: based on rng and shipType(strength, health, shield, armour, fuel, food, agility, speed, resources, money, crew, cargoCapacity, miningPower, fuelEfficiency)
         Ability Stats: based on officier skill level and rank
     */
+protected:
     int crew;
     int cargoCapacity;
     int miningPower;
@@ -85,10 +87,12 @@ class Playership : public SpaceShip //INCOMPLETE
     int offensiveAbilityLevel;
     std::string shipType;
     std::vector<Officer> officers;
+    std::vector<Officer> deadofficers;
 public:
     Playership();
     Playership(std::vector<Officer> officers);
     Playership(std::string type, std::vector<Officer> officers);
+    void displayPlayership();
     int getCrew();
     int getCargoCapacity();
     int getminingPower();
@@ -100,7 +104,7 @@ public:
     void useSystemsRecovery();               //use engineer, activates on travel
     bool useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
     bool useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
-    bool useCombatMauver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
+    bool useCombatManuver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
     bool useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
     void useMine(PlanetEncounter &target);   //use miner stats.
     bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
@@ -114,10 +118,10 @@ private:
     void OneHitSetup();
     void AverageSetup();
     Officer findOfficer(std::string job);
-    void checkForDead();
     void addToCrew();                       //chance to pick up crew members from planets, ships and trading stations.
     void damageCrew();                      //chance to kill crew members
     int addOfficer(Officer newOfficer);     //in the case of an officer being replaced
+    void checkForDead();                    //checks if an officer has died and replaces the officer, with a lesser skilled officer.
     //some sort of create new officer function which find the LAST officer to have died in that job.
     void checkFood();
     bool hasFuel();
