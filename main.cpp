@@ -30,6 +30,8 @@ int main(int argc, char* argv[]){
     Officer f3("engineer", randNumGen(50, 100));
     Officer f4("miner", randNumGen(50, 100));
     Officer f5("weapons", randNumGen(50, 100));
+    Officer f6("none", 0);
+    officers.push_back(f6);
     f1.displayOfficer();
     f1.levelUpSkill(10);
     f1.takeDamage(2000);
@@ -64,20 +66,26 @@ int main(int argc, char* argv[]){
     she1.displaySpaceShip();
     std::cout << '\n'<< '\n';
     #pragma endregion
-/*
+
     #pragma region //Playership Testing
     Playership p1(officers);
     p1.displayPlayership();
-    std::cout << "Attempting to travel: " << p1.useTravel() << '\n';
-    std::cout << "Using diplomacy: " << p1.useDiplomacy(she1) << '\n';
-    std::cout << "Using trade: " << "tradStation not setup, also interfaces are needed to prevent sectors which shouldn't be able to trade from trading\n";
-    std::cout << "Taking damage: " << p1.takeDamageFrom(she1) << '\n';
-    std::cout << "Attemptng to escape: " << p1.useEscape(she1) << '\n';
+    std::cout << "Attempting to travel: " ;
+    std::cout << (p1.useTravel()? "true": "false") << '\n';
+    std::cout << "Using diplomacy: ";
+    std::cout << (p1.useDiplomacy(she1) ? "true" : "false") << '\n';
+    std::cout << "Using trade: ";
+    std::cout << (p1.useTrade(she1)? "true":"false")<<'\n';
+    std::cout << "Taking damage: ";
+    std::cout << (p1.takeDamageFrom(she1)? "true" : "false") << '\n';
+    std::cout << "Attemptng to escape: ";
+    std::cout << (p1.useEscape(she1)?"true":"false") << '\n';
     std::cout << "Attempting sys recovery: "; 
     p1.useSystemsRecovery();
     std::cout << '\n';
-    std::cout << "Attempting mine: " << "not set up\n";
-    std::cout << "Attempting to attack: " << p1.useAttack(she1) << '\n';
+    //std::cout << "Attempting mine: " << "not set up\n";
+    std::cout << "Attempting to attack: ";
+    std::cout << (p1.useAttack(she1)?"true":"false") << '\n';
     std::cout << '\n'<< '\n';
     #pragma endregion
 
@@ -85,7 +93,7 @@ int main(int argc, char* argv[]){
     SpaceSector s1;
     s1.displaySpaceSector();
     std::cout << '\n'<< '\n';
-    #pragma endregion*/
+    #pragma endregion/**/
 
     return 0;
 }

@@ -6,8 +6,7 @@
 #include "SpaceSector.h"
 #include "Officer.h"
 
-class SpaceShip //COMPLETE
-{
+class SpaceShip {//COMPLETE
     /* 
         Core Stats: based on shiptype OR rng based on race. (strength, health, shield, armour, fuel, food, agility, speed, resources, money)
         Ability Stats: based on officer skill and rank OR rng based on race for non-player ships.
@@ -52,79 +51,77 @@ class SpaceShip //COMPLETE
     private:
 };
 
-class SpaceShipEncounter : public SpaceShip, public SpaceSector //INCOMPLETE
-{
-public:
-    SpaceShipEncounter();
-private:
-    void solarisShipSetup();
-    void scarShipSetup();
-    void celestialShipSetup();
-    void galvamekShipSetup();
-    void humanShipSetup();
+class SpaceShipEncounter : public SpaceShip, public SpaceSector {//INCOMPLETE
+    public:
+        SpaceShipEncounter();
+    private:
+        void solarisShipSetup();
+        void scarShipSetup();
+        void celestialShipSetup();
+        void galvamekShipSetup();
+        void humanShipSetup();
 
 };
 
-class Playership : public SpaceShip
-{
+class Playership : public SpaceShip{
     /* 
         Core Stats: based on rng and shipType(strength, health, shield, armour, fuel, food, agility, speed, resources, money, crew, cargoCapacity, miningPower, fuelEfficiency)
         Ability Stats: based on officier skill level and rank
     */
-protected:
-    int crew;
-    int cargoCapacity;
-    int miningPower;
-    int fuelEfficiency;
-    int diplomacyLevel; 
-    int tradabilityLevel; 
-    int travelEfficiencyLevel;
-    int combatManuverabilityLevel;
-    int evasionAbilityLevel;
-    int defesiveAbilityLevel;
-    int systemsRecoveryLevel;
-    int miningAbilityLevel;
-    int offensiveAbilityLevel;
-    std::string shipType;
-    std::vector<Officer> officers;
-    std::vector<Officer> deadofficers;
-public:
-    Playership();
-    Playership(std::vector<Officer> officers);
-    Playership(std::string type, std::vector<Officer> officers);
-    void displayPlayership();
-    int getCrew();
-    int getCargoCapacity();
-    int getminingPower();
-    int getfuelEfficiency();
-    std::string getShipType();
-    std::vector<Officer> getOfficers(Officer newOfficer);
-    //TODO: Make sure all abilities are being defined here
-    void useTrade(SpaceSector &trader);     //use captain, rng chance of success
-    void useSystemsRecovery();               //use engineer, activates on travel
-    bool useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
-    bool useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
-    bool useCombatManuver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
-    bool useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
-    void useMine(PlanetEncounter &target);   //use miner stats.
-    bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
-    bool takeDamageFrom(SpaceShipEncounter &attacker);
-private:
-    void recalculateDefense(); //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
-    void setupShip();
-    void OffensiveSetup();
-    void MinerSetup();
-    void DefensiveSetup();
-    void OneHitSetup();
-    void AverageSetup();
-    Officer findOfficer(std::string job);
-    void addToCrew();                       //chance to pick up crew members from planets, ships and trading stations.
-    void damageCrew();                      //chance to kill crew members
-    int addOfficer(Officer newOfficer);     //in the case of an officer being replaced
-    void checkForDead();                    //checks if an officer has died and replaces the officer, with a lesser skilled officer.
-    //some sort of create new officer function which find the LAST officer to have died in that job.
-    void checkFood();
-    bool hasFuel();
+    protected:
+        int crew = 0;
+        int cargoCapacity = 0;
+        int miningPower = 0;
+        int fuelEfficiency = 0;
+        int diplomacyLevel = 0;
+        int tradabilityLevel = 0;
+        int travelEfficiencyLevel = 0;
+        int combatManuverabilityLevel = 0;
+        int evasionAbilityLevel = 0;
+        int defesiveAbilityLevel = 0;
+        int systemsRecoveryLevel = 0;
+        int miningAbilityLevel = 0;
+        int offensiveAbilityLevel = 0;
+        std::string shipType = "";
+        std::vector<Officer> officers;
+        std::vector<Officer> deadofficers;
+    public:
+        Playership();
+        Playership(std::vector<Officer>& officers);
+        Playership(std::string type, std::vector<Officer> officers);
+        void displayPlayership();
+        int getCrew();
+        int getCargoCapacity();
+        int getminingPower();
+        int getfuelEfficiency();
+        std::string getShipType();
+        std::vector<Officer> getOfficers(Officer newOfficer);
+        //TODO: Make sure all abilities are being defined here
+        bool useTrade(SpaceSector &trader);     //use captain, rng chance of success
+        void useSystemsRecovery();               //use engineer, activates on travel
+        bool useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
+        bool useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
+        bool useCombatManuver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
+        bool useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
+        void useMine(PlanetEncounter &target);   //use miner stats.
+        bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
+        bool takeDamageFrom(SpaceShipEncounter &attacker);
+    private:
+        void recalculateDefense(); //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
+        void setupShip();
+        void OffensiveSetup();
+        void MinerSetup();
+        void DefensiveSetup();
+        void OneHitSetup();
+        void AverageSetup();
+        Officer& findOfficer(std::string job);
+        void addToCrew();                       //chance to pick up crew members from planets, ships and trading stations.
+        void damageCrew();                      //chance to kill crew members
+        int addOfficer(Officer newOfficer);     //in the case of an officer being replaced
+        void checkForDead();                    //checks if an officer has died and replaces the officer, with a lesser skilled officer.
+        //some sort of create new officer function which find the LAST officer to have died in that job.
+        void checkFood();
+        bool hasFuel();
 };
 
 #endif

@@ -32,7 +32,7 @@ void Race::setupStats(std::string type){
 }
 
 void Race::displayRace(){
-    std::cout << std::left << std::setw(12) << "combatManuverLvl:" << std::left << std::setw(12) << this->combatManuverabilityLevel << '\n';
+    std::cout << std::left << std::setw(12) << "dodgeLvl:" << std::left << std::setw(12) << this->combatManuverabilityLevel << '\n';
     std::cout << std::left << std::setw(12) << "offensiveLvl:" << std::left << std::setw(12) << this->offensiveAbilityLevel;
     std::cout << std::left << std::setw(12) << "defesiveLvl:" << std::left << std::setw(12) << this->defesiveAbilityLevel << '\n';
     std::cout << std::left << std::setw(12) << "sysRecoveryLvl:" << std::left << std::setw(12) << this->systemsRecoveryLevel;
@@ -139,6 +139,10 @@ void SpaceSector::displaySpaceSector(){
 
 Race SpaceSector::getRace(){
     return this->race;
+}
+
+std::string SpaceSector::getType(){
+    return this->type;
 }
 
 PlanetEncounter::PlanetEncounter() : SpaceSector(){

@@ -17,7 +17,7 @@ Officer::Officer(){
 }
 
 Officer::Officer(std::string job, int skillLevel){
-    std::cout << "\nstart of constructor ";
+    std::cout << "officer constructor\n";
     this->name = getRandName();
     this->job = job;
     this->age = randNumGen(1,100);
@@ -25,7 +25,6 @@ Officer::Officer(std::string job, int skillLevel){
     this->skillLevel = skillLevel;
     this->isDead = false;
     levelUpSkill(0); //checks if the skillLevel given warrents a rank up.
-    std::cout << "end of constructor\n\n";
 }
 
 void Officer::displayOfficer(){
@@ -72,7 +71,9 @@ std::string Officer::getJob(){
 
 void Officer::takeDamage(int damage){
     std::cout << damage << " damage dealt on " << this->name << '\n';
-    this->health -= damage;
+    if(this->job != "none"){
+        this->health -= damage;
+    }
     std::cout << this->name << "'s hp is now: " << this->health << "hp\n";
 
     if (this->health <= 0){
