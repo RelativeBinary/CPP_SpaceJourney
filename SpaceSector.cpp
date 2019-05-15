@@ -124,6 +124,10 @@ int Race::getDiplomacyLevel(){
 std::string Race::getType(){
     return this->type;
 }
+
+void Race::setOffensiveAbilityLevel(int level){
+    this->offensiveAbilityLevel = level;
+}
 #pragma endregion
 
 SpaceSector::SpaceSector(){
@@ -148,4 +152,34 @@ std::string SpaceSector::getType(){
 PlanetEncounter::PlanetEncounter() : SpaceSector(){
     this->type = "PlanetEncounter";
 }
+
+void PlanetEncounter::displayPlanet(){
+    displaySpaceSector();
+}
+
+TradingStation::TradingStation() : SpaceSector(){
+    this->type = "TradingStation";
+}
+
+void TradingStation::displayStation(){
+    displaySpaceSector();
+}
+
+AsteriodBelt::AsteriodBelt() : SpaceSector(){
+    this->type = "AsteriodBelt";
+    this->race.setOffensiveAbilityLevel(100); //if you do take damage from passing through an asteriodbelt the chance of manuvering through it is slim.
+    calculateStats();
+    this->strength *= (SpaceSector::getSectorCount()/2); //strength of the asteroid belt is multiplied by sectorCount/2 so sector 20 should make strength 100.
+}
+
+void AsteriodBelt::calculateStats(){
+    //if you do take damage from passing through an asteriodbelt the chance of manuvering through it is slim.
+    this->race.setOffensiveAbilityLevel(100);
+    //strength of the asteroid belt is multiplied by sectorCount/2 so sector 20 should make strength 100.
+}
+
+void AsteriodBelt::displayAsteriodBelt(){
+    displayAsteriodBelt();
+}
+
 

@@ -85,6 +85,17 @@ class Playership : public SpaceShip{
         std::string shipType = "";
         std::vector<Officer> officers;
         std::vector<Officer> deadofficers;
+
+        //SCOREBOARD STATS
+        //most of the ships resource based values, number of sectors travelled
+        int shipsDestroyed;
+        int successfulDodges;
+        int successfulEscapes;
+        int successfulTrades;
+        int successfulMines;
+        int deadCrewMembers;
+        int deadOfficers;
+
     public:
         Playership();
         Playership(std::vector<Officer>& officers);
@@ -106,6 +117,7 @@ class Playership : public SpaceShip{
         void useMine(PlanetEncounter &target);   //use miner stats.
         bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
         bool takeDamageFrom(SpaceShipEncounter &attacker);
+        bool flyThroughAsteriodBelt(); //true = no damage, false = take damamge
     private:
         void recalculateDefense(); //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
         void setupShip();

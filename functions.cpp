@@ -15,6 +15,13 @@ int randNumGen(int min, int max){
 
 }
 
+std::string getRandName(){
+    std::vector<std::string> names = {"Barb Dwyer", "Chester Minit", "Doris Shutt", "Dick Hertz", "Freda Livery", "Gus Tofwynde", "Gary Oakie", "Ivana Dayov"};
+    std::string newName = names[randNumGen(0, names.size())];
+    std::cout << "the new name chosen was: " << newName << '\n';
+    return newName;
+}
+
 std::string determineShipType(){
     int value = randNumGen(0, 5);
     std::cout << "determining ship type\n";
@@ -30,13 +37,6 @@ std::string determineShipType(){
         return "Jack";
     }
     return "error";
-}
-
-std::string getRandName(){
-    std::vector<std::string> names = {"Barb Dwyer", "Chester Minit", "Doris Shutt", "Dick Hertz", "Freda Livery", "Gus Tofwynde", "Gary Oakie", "Ivana Dayov"};
-    std::string newName = names[randNumGen(0, names.size())];
-    std::cout << "the new name chosen was: " << newName << '\n';
-    return newName;
 }
 
 std::string determineRaceType(){
@@ -59,4 +59,32 @@ std::string determineRaceType(){
     }
     std::cout << "RACE CHOOSEN WAS: " << race << '\n';
     return race;
+}
+
+std::string determineSectorType(){
+    int value = randNumGen(0, 100);
+    std::cout << "determining sector type\n";
+    std::string sector = "";
+    if (value >= 0 && value <= 34)
+    {
+        sector = "SpaceShipEncounter";
+    }
+    else if (value >= 35 && value <= 59)
+    {
+        sector = "PlanetEncounter";
+    }
+    else if (value >= 60 && value <= 74)
+    {
+        sector = "TradingStation";
+    }
+    else if (value >= 75 && value <= 89)
+    {
+        sector = "Empty";
+    }
+    else if (value >= 90 && value <= 99)
+    {
+        sector = "AsteriodBelt";
+    }
+    std::cout << "SECTOR CHOOSEN WAS: " << sector << '\n';
+    return sector;
 }

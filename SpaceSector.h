@@ -34,6 +34,7 @@ class Race {//COMPLETE
         int getMiningAbilityLevel();
         int getTradabilityLevel();
         int getDiplomacyLevel();
+        void setOffensiveAbilityLevel(int level);
         std::string getType();
     private:
         void setupStats(std::string type);
@@ -62,23 +63,24 @@ class SpaceSector {//COMPLETE
 };
 
 //INCOMPLETE
-class PlanetEncounter : public SpaceSector
-{
+class PlanetEncounter : public SpaceSector{
     int resources;
     public:
         PlanetEncounter();
+        void displayPlanet();
 };
 
-class TradingStation : public SpaceSector
-{
+class TradingStation : public SpaceSector{
     public:
         TradingStation();
+        void displayStation();
 };
 
-class AsteriodBelt : public SpaceSector
-{
+class AsteriodBelt : public SpaceSector{
+    int strength = 10;
     public: 
         AsteriodBelt();        //should easily be created without need for parameters
+        void displayAsteriodBelt();
     private:
         void calculateStats(); //based on the current sectorcount, higher sectors mean higher damamge but more resources
 };

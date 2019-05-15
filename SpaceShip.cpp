@@ -204,7 +204,7 @@ bool Playership::useDiplomacy(SpaceSector &aggressor){
     std::cout << "negotiations failed ";
     return false;
 }
-
+//INCOMPLETE: you also need to sell resources for money.
 bool Playership::useTrade(SpaceSector &trader){ //only works with planets and trading stations
     Officer captain = findOfficer("captain");
     int capLvl = captain.getSkillLevel();
@@ -405,6 +405,16 @@ void Playership::recalculateDefense(){ //used after addOfficer and officer is of
         std::cout << "new defesive ability level hsa been set to: " << chance << '\n';
     }
     
+}
+
+bool Playership::flyThroughAsteriodBelt(){
+    int chance = (this->agility + this->speed + findOfficer("pilot").getSkillLevel())/3;
+    if (chance >= randNumGen(20,100)){
+        this->fuel += 20;
+        this->resources += 20;
+        std::cout << "successful flythrough an asteriodbelt, fuel and resources raised by 20\n";
+        return true;
+    }
 }
 
 void Playership::addToCrew(){ 
