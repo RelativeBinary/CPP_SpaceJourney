@@ -17,9 +17,9 @@ class Race {//COMPLETE
     private:
     int lowmin = 0;
     int lowmax = 40;
-    int midmin = 41; 
+    int midmin = 40; 
     int midmax = 70;
-    int highmin = 71; 
+    int highmin = 70; 
     int highmax = 100;
     public:
         Race();
@@ -49,9 +49,9 @@ class Race {//COMPLETE
 class SpaceSector {//COMPLETE
     protected:
         Race race;
-        static int sectorCount;
         std::string type = "SpaceSector";
     public:
+        static int sectorCount;
         SpaceSector();//sectorCount auto incremented, auto race setup included
         Race getRace();
         std::string getType();
@@ -81,8 +81,7 @@ class AsteriodBelt : public SpaceSector{
     public: 
         AsteriodBelt();        //should easily be created without need for parameters
         void displayAsteriodBelt();
-    private:
-        void calculateStats(); //based on the current sectorcount, higher sectors mean higher damamge but more resources
+        int getStrength();
 };
 
 //empty sector doesnt do anything

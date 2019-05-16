@@ -6,18 +6,15 @@
 #include "functions.h"
 
 Race::Race(){
-    std::cout << "Race constructor internal type\n";
     this->type = determineRaceType();
     setupStats(type);
 }
 
 Race::Race(std::string type){
-    std::cout << "Race constructor external type\n";
     setupStats(type);
 }
 
 void Race::setupStats(std::string type){
-    std::cout << "setting up race stats\n";
     if (type == "Solaris"){
         hostileSetup();
     }else if (type == "Scar"){
@@ -43,17 +40,15 @@ void Race::displayRace(){
 
 #pragma region //race stat setup
 void Race::hostileSetup(){
-    std::cout << "setting up hostile race stats\n";
     this->combatManuverabilityLevel = randNumGen(highmin, highmax);
     this->offensiveAbilityLevel = randNumGen(highmin, highmax);
     this->defesiveAbilityLevel = randNumGen(midmin, midmax);
     this->systemsRecoveryLevel = randNumGen(midmin, midmax);
     this->evasionAbilityLevel = randNumGen(lowmin, lowmax);
     this->tradabilityLevel = randNumGen(lowmin, lowmax);
-    this->diplomacyLevel = randNumGen(lowmin, lowmax);
+    this->diplomacyLevel = randNumGen(0,9);
 }
 void Race::minerSetup(){
-    std::cout << "setting up miner race stats\n";
     this->combatManuverabilityLevel = randNumGen(lowmin, lowmax);
     this->offensiveAbilityLevel = randNumGen(lowmin, lowmax);
     this->defesiveAbilityLevel = randNumGen(midmin, midmax);
@@ -63,9 +58,8 @@ void Race::minerSetup(){
     this->diplomacyLevel = randNumGen(midmin, midmax);
 }
 void Race::passiveSetup(){
-    std::cout << "setting up passive race stats\n";
     this->combatManuverabilityLevel = randNumGen(midmin, midmax);
-    this->offensiveAbilityLevel = randNumGen(lowmin, lowmax);
+    this->offensiveAbilityLevel = randNumGen(0, 0);
     this->defesiveAbilityLevel = randNumGen(midmin,midmax);
     this->systemsRecoveryLevel = randNumGen(highmin, highmax);
     this->evasionAbilityLevel = randNumGen(highmin,highmax);
@@ -73,7 +67,6 @@ void Race::passiveSetup(){
     this->diplomacyLevel = randNumGen(highmin,highmax);
 }
 void Race::defensiveSetup(){
-    std::cout << "setting up defensive race stats\n";
     this->combatManuverabilityLevel = randNumGen(midmin,midmax);
     this->offensiveAbilityLevel = randNumGen(midmin,midmax);
     this->defesiveAbilityLevel = randNumGen(highmin,highmax);
@@ -83,7 +76,6 @@ void Race::defensiveSetup(){
     this->diplomacyLevel = randNumGen(midmin,midmax);
 }
 void Race::averageSetup(){
-    std::cout << "setting up average race stats\n";
     this->combatManuverabilityLevel = randNumGen(midmin, midmax);
     this->offensiveAbilityLevel = randNumGen(midmin, midmax);
     this->defesiveAbilityLevel = randNumGen(midmin, midmax);
@@ -131,7 +123,6 @@ void Race::setOffensiveAbilityLevel(int level){
 #pragma endregion
 
 SpaceSector::SpaceSector(){
-    std::cout << "SpaceSector constructor\n";
     SpaceSector::sectorCount++;
 }
 
@@ -167,19 +158,16 @@ void TradingStation::displayStation(){
 
 AsteriodBelt::AsteriodBelt() : SpaceSector(){
     this->type = "AsteriodBelt";
-    this->race.setOffensiveAbilityLevel(100); //if you do take damage from passing through an asteriodbelt the chance of manuvering through it is slim.
-    calculateStats();
+    this->race.setOffensiveAbilityLevel(9999); //if you do take damage from passing through an asteriodbelt the chance of manuvering through it is slim.
     this->strength *= (SpaceSector::getSectorCount()/2); //strength of the asteroid belt is multiplied by sectorCount/2 so sector 20 should make strength 100.
 }
 
-void AsteriodBelt::calculateStats(){
-    //if you do take damage from passing through an asteriodbelt the chance of manuvering through it is slim.
-    this->race.setOffensiveAbilityLevel(100);
-    //strength of the asteroid belt is multiplied by sectorCount/2 so sector 20 should make strength 100.
+void AsteriodBelt::displayAsteriodBelt(){
+    displaySpaceSector();
 }
 
-void AsteriodBelt::displayAsteriodBelt(){
-    displayAsteriodBelt();
+int AsteriodBelt::getStrength(){
+    return this->strength;
 }
 
 

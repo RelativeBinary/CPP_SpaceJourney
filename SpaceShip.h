@@ -54,6 +54,7 @@ class SpaceShip {//COMPLETE
 class SpaceShipEncounter : public SpaceShip, public SpaceSector {//INCOMPLETE
     public:
         SpaceShipEncounter();
+        void takeDamage(int damage);
     private:
         void solarisShipSetup();
         void scarShipSetup();
@@ -73,51 +74,55 @@ class Playership : public SpaceShip{
         int cargoCapacity = 0;
         int miningPower = 0;
         int fuelEfficiency = 0;
-        int diplomacyLevel = 0;
-        int tradabilityLevel = 0;
-        int travelEfficiencyLevel = 0;
-        int combatManuverabilityLevel = 0;
-        int evasionAbilityLevel = 0;
         int defesiveAbilityLevel = 0;
-        int systemsRecoveryLevel = 0;
-        int miningAbilityLevel = 0;
-        int offensiveAbilityLevel = 0;
         std::string shipType = "";
         std::vector<Officer> officers;
         std::vector<Officer> deadofficers;
-
+        //Setup variables
+        int lowmin = 0;
+        int lowmax = 40;
+        int midmin = 40;
+        int midmax = 70;
+        int highmin = 70;
+        int highmax = 100;
+    public:
         //SCOREBOARD STATS
         //most of the ships resource based values, number of sectors travelled
-        int shipsDestroyed;
-        int successfulDodges;
-        int successfulEscapes;
-        int successfulTrades;
-        int successfulMines;
-        int deadCrewMembers;
-        int deadOfficers;
-
-    public:
+        int tradingStationsVisited = 0;
+        int AsteriodBeltsPassed = 0;
+        int EmptySectorsPassed = 0;
+        int successfulEscapes = 0;
+        int successfulDodges = 0;
+        int shipsEncountered = 0;
+        int successfulTrades = 0;
+        int successfulMines = 0;
+        int deadCrewMembers = 0;
+        int shipsDestroyed = 0;
+        int planetsVisited = 0;
+        int deadOfficers = 0;
         Playership();
         Playership(std::vector<Officer>& officers);
         Playership(std::string type, std::vector<Officer> officers);
         void displayPlayership();
+        void getLoot();
         int getCrew();
         int getCargoCapacity();
         int getminingPower();
         int getfuelEfficiency();
         std::string getShipType();
-        std::vector<Officer> getOfficers(Officer newOfficer);
+        std::vector<Officer> getOfficers();
         //TODO: Make sure all abilities are being defined here
         bool useTrade(SpaceSector &trader);     //use captain, rng chance of success
         void useSystemsRecovery();               //use engineer, activates on travel
         bool useDiplomacy(SpaceSector &aggressor); //use captain, targets diplomacy stat, check skillevel, rng chance of success
         bool useTravel();                        //use pilot, engineer, attempSystemsRecovery(),
-        bool useCombatManuver(SpaceShipEncounter &attacker); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
+        bool useCombatManuver(int offensiveAbilityLevel); //use pilot, engineer, takes attackers combat manuver and offensive performance stat
         bool useEscape(SpaceShipEncounter &attack);         //use engineer, pilot, speed, agility, takes attacker's speed
         void useMine(PlanetEncounter &target);   //use miner stats.
         bool useAttack(SpaceShipEncounter &target); //uses weaponsSmith and pilot, takes targets defensive stats.
-        bool takeDamageFrom(SpaceShipEncounter &attacker);
+        bool takeDamageFrom(int offensiveAbilityLevel, int strength);
         bool flyThroughAsteriodBelt(); //true = no damage, false = take damamge
+        Officer& findOfficer(std::string job);
     private:
         void recalculateDefense(); //use weaponsSmith and engineer, occurs on initialisation and if the either the weaponsSmith dies or an Engineer dies.
         void setupShip();
@@ -126,9 +131,9 @@ class Playership : public SpaceShip{
         void DefensiveSetup();
         void OneHitSetup();
         void AverageSetup();
-        Officer& findOfficer(std::string job);
         void addToCrew();                       //chance to pick up crew members from planets, ships and trading stations.
         void damageCrew();                      //chance to kill crew members
+        void addResources(int amount);
         int addOfficer(Officer newOfficer);     //in the case of an officer being replaced
         void checkForDead();                    //checks if an officer has died and replaces the officer, with a lesser skilled officer.
         //some sort of create new officer function which find the LAST officer to have died in that job.

@@ -6,7 +6,6 @@
 #include "functions.h"
 
 SpaceShip::SpaceShip(){
-    std::cout << "SpaceShip constructor\n";
     fuel = 50;
     food = 50;
     resources = 50;
@@ -55,11 +54,10 @@ void SpaceShip::displaySpaceShip(){
     std::cout << std::left << std::setw(12) << "Agility: " << std::left << std::setw(12) << this->agility;
     std::cout << std::left << std::setw(12) << "Speed: " << std::left << std::setw(12) << this->speed << '\n';
     std::cout << std::left << std::setw(12) << "Resources: " << std::left << std::setw(12) << this->resources;
-    std::cout << std::left << std::setw(12) << "Money: " << std::left << std::setw(12) << this->money << "\n\n";
+    std::cout << std::left << std::setw(12) << "Money: " << std::left << std::setw(12) << this->money << "\n";
 }
 
 SpaceShipEncounter::SpaceShipEncounter(){
-    std::cout << "SpaceShipEncounter constructor\n";
     this->type = "SpaceShipEncounter";
     if (this->getRace().getType() == "Solaris")
     {
@@ -85,56 +83,67 @@ SpaceShipEncounter::SpaceShipEncounter(){
     }
 }
 
+void SpaceShipEncounter::takeDamage(int damage){
+    if (this->shield > 0){
+        this->shield -= damage;
+    } else if (this->shield <= 0 && this->armour > 0){
+        this->armour -= damage;
+    } else {
+        this->health -= damage;
+    }
+
+}
+
 #pragma region//TODO: Setup raceshiptypes
 void SpaceShipEncounter::celestialShipSetup(){
-    this->speed = randNumGen(lowmin, lowmax);
-    this->health = randNumGen(lowmin, lowmax);
-    this->shield = randNumGen(lowmin, lowmax);
-    this->armour = randNumGen(lowmin, lowmax);
-    this->agility = randNumGen(lowmin, lowmax);
+    this->speed = randNumGen(highmin, highmax);
+    this->health = randNumGen(highmin, highmax);
+    this->shield = randNumGen(highmin, highmax);
+    this->armour = randNumGen(highmin, highmax);
+    this->agility = randNumGen(highmin, highmax);
     this->strength = randNumGen(lowmin, lowmax);
 }
 void SpaceShipEncounter::galvamekShipSetup(){
     this->speed = randNumGen(lowmin, lowmax);
     this->health = randNumGen(lowmin, lowmax);
-    this->shield = randNumGen(lowmin, lowmax);
-    this->armour = randNumGen(lowmin, lowmax);
+    this->shield = randNumGen(highmin, highmax);
+    this->armour = randNumGen(highmin, highmax);
     this->agility = randNumGen(lowmin, lowmax);
-    this->strength = randNumGen(lowmin, lowmax);
+    this->strength = randNumGen(highmin, highmax);
 }
 void SpaceShipEncounter::solarisShipSetup(){
-    this->speed = randNumGen(lowmin, lowmax);
-    this->health = randNumGen(lowmin, lowmax);
+    this->speed = randNumGen(midmin, midmax);
+    this->health = randNumGen(midmin, midmax);
     this->shield = randNumGen(lowmin, lowmax);
-    this->armour = randNumGen(lowmin, lowmax);
-    this->agility = randNumGen(lowmin, lowmax);
-    this->strength = randNumGen(lowmin, lowmax);
+    this->armour = randNumGen(highmin, highmax);
+    this->agility = randNumGen(midmin, midmax);
+    this->strength = randNumGen(highmin, highmax);
 }
 void SpaceShipEncounter::humanShipSetup(){
-    this->speed = randNumGen(lowmin, lowmax);
-    this->health = randNumGen(lowmin, lowmax);
-    this->shield = randNumGen(lowmin, lowmax);
-    this->armour = randNumGen(lowmin, lowmax);
-    this->agility = randNumGen(lowmin, lowmax);
-    this->strength = randNumGen(lowmin, lowmax);
+    this->speed = randNumGen(midmin, midmax);
+    this->health = randNumGen(midmin, midmax);
+    this->shield = randNumGen(midmin, midmax);
+    this->armour = randNumGen(midmin, midmax);
+    this->agility = randNumGen(midmin, midmax);
+    this->strength = randNumGen(midmin, midmax);
 }
 void SpaceShipEncounter::scarShipSetup(){
-    this->speed = randNumGen(lowmin, lowmax);
+    this->speed = randNumGen(highmin, highmax);
     this->health = randNumGen(lowmin, lowmax);
     this->shield = randNumGen(lowmin, lowmax);
     this->armour = randNumGen(lowmin, lowmax);
-    this->agility = randNumGen(lowmin, lowmax);
-    this->strength = randNumGen(lowmin, lowmax);
+    this->agility = randNumGen(highmin, highmax);
+    this->strength = randNumGen(midmin, midmax);
 }
 #pragma endregion
 
 Playership::Playership() {
     std::cout << "Playership constructor\n";
-    int crew = 0;
-    int cargoCapacity = 0; //out of 100
-    int mainingPower = 0;  // out of 100
-    int fuelEfficiency = 0; //out of 10
-    std::string shipType = "Jack";
+    this->crew = 0;
+    this->cargoCapacity = 0; //out of 100
+    this->miningPower = 0;  // out of 100
+    this->fuelEfficiency = 0; //out of 10
+    this->shipType = "Jack";
 
 }
 
@@ -159,28 +168,26 @@ void Playership::displayPlayership(){//INCOMPLETE
     std::cout << std::left << std::setw(12) << "cargoCap:" << std::left << std::setw(12) << this->cargoCapacity;
     std::cout << std::left << std::setw(12) << "miningPow:" << std::left << std::setw(12) << this->miningPower << '\n';
     std::cout << std::left << std::setw(12) << "fuelEff:" << std::left << std::setw(12) << this->fuelEfficiency;
-    std::cout << std::left << std::setw(12) << "diplomacyLvl:" << std::left << std::setw(12) << this->diplomacyLevel << '\n';
-    std::cout << std::left << std::setw(12) << "tradeLvl:" << std::left << std::setw(12) << this->tradabilityLevel;
-    std::cout << std::left << std::setw(12) << "travelEffLvl:" << std::left << std::setw(12) << this->travelEfficiencyLevel << '\n';
-    std::cout << std::left << std::setw(12) << "dodgeLvl:" << std::left << std::setw(12) << this->combatManuverabilityLevel;
-    std::cout << std::left << std::setw(12) << "evasionLvl:" << std::left << std::setw(12) << this->evasionAbilityLevel << '\n';
-    std::cout << std::left << std::setw(12) << "defesiveLvl:" << std::left << std::setw(12) << this->defesiveAbilityLevel;
-    std::cout << std::left << std::setw(12) << "sysRecoveryLvl:" << std::left << std::setw(12) << this->systemsRecoveryLevel << '\n';
-    std::cout << std::left << std::setw(12) << "miningLvl:" << std::left << std::setw(12) << this->miningAbilityLevel;
-    std::cout << std::left << std::setw(12) << "offensiveLvl:" << std::left << std::setw(12) << this->offensiveAbilityLevel << '\n';
     std::cout << std::left << std::setw(12) << "crew:"<< std::left << std::setw(12)  << this->crew;
     std::cout << std::left << std::setw(12) << "shipType: " << std::left << std::setw(12) << this->shipType << '\n';
-    std::cout << "displaying officers:\n";
+    std::cout << "\n";
     for (int i = 0; i < officers.size(); i++){
         if (officers[i].getJob() != "none"){
             officers[i].displayOfficer();
         }
     }
-    //dont use for each loop
+    for (int i = 0; i < deadofficers.size(); i++){
+        if (deadofficers[i].getJob() != "none"){
+            deadofficers[i].displayOfficer();
+        }
+    }
 }
 
 void Playership::setupShip(){
-    if (this->shipType == "Dawn Sailor"){
+    this->crew = randNumGen(0,20);
+    recalculateDefense();
+    if (this->shipType == "Dawn Sailor")
+    {
         OffensiveSetup();
     }else if (this->shipType == "Scavenger"){
         MinerSetup();
@@ -196,12 +203,11 @@ void Playership::setupShip(){
 bool Playership::useDiplomacy(SpaceSector &aggressor){
     Officer captain = findOfficer("captain");
     int capLvl = captain.getSkillLevel();
-    int chance = (capLvl + aggressor.getRace().getDiplomacyLevel())/2;
+    int chance = (capLvl + aggressor.getRace().getDiplomacyLevel())%100;
     if (chance >= randNumGen(0,100)){
-        std::cout << "negotiations are successful "; 
         return true;
     }
-    std::cout << "negotiations failed ";
+    std::cout << "Negotiations failed";
     return false;
 }
 //INCOMPLETE: you also need to sell resources for money.
@@ -210,28 +216,32 @@ bool Playership::useTrade(SpaceSector &trader){ //only works with planets and tr
     int capLvl = captain.getSkillLevel();
     int chance = (capLvl + trader.getRace().getTradabilityLevel())/2;
     if (!(trader.getType() == "SpaceShipEncounter" || trader.getType() == "AsteroidBelt")){
-        if (chance >= randNumGen(0, 100))
-        {
-            std::cout << "Attempting to trade ";
-            if (this->food <= 10 && this->money >= 10)
-            {
-                std::cout << " buying food ";
+        if (chance >= randNumGen(0, 100)){
+            std::cout << "Attempting to trade, ";
+            if (this->food <= 10 && this->money >= 10){
+                std::cout << " buying food, ";
                 this->money -= 10;
                 this->food += 10;
+            }else if (this->money < 10){
+                std::cout << "no money to buy food, ";
+            }else if (this->food >= 10){
+                std::cout << "no need to buy food, ";
             }
-            else if (this->money < 10)
-            {
-                std::cout << "no money to buy food ";
-            }
-            else if (this->food >= 10)
-            {
-                std::cout << "no need to buy food ";
+            //chance for bonus trade
+            if (chance >= randNumGen(0, 100)){
+                if (this->resources > 0){
+                    std::cout << " the trading station took resources and gave you food and fuel in return, ";
+                    this->fuel += 20;
+                    this->food += 40;
+                    this->resources -= 20;
+                }
             }
             std::cout << "topping fuel up. trade complete.\n";
             this->fuel += 20;
+            findOfficer("captain").levelUpSkill(10);
             return true;
         }
-        std::cout << "Failed to trade\n";
+        std::cout << "Failed to make negotiations to trade\n";
         return false;
     }
     //when trade is not enabled for the sector type
@@ -244,42 +254,49 @@ bool Playership::hasFuel(){
     return false;
 }
 
-bool Playership::useTravel() {//USED IN FUNCTIONS.CPP/H
+bool Playership::useTravel() {
     //get appropriate stats
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
     //determine fuel and food costs(if there is no food left then all officers take famine damage)
     int chance = (pilotLvl + engiLvl + this->fuelEfficiency)/3;
     if (chance >= randNumGen(0,100)){
-        fuel -= 1;
-        food -= 1;
-        std::cout << "Travel used. Fuel and Food lowered by 1 to: " << this->fuel << " and " << this->food << " ";
-        addToCrew();
-        return hasFuel();
-    } else {
         fuel -= 5;
         food -= 5;
-        std::cout << "Travel used. Fuel and Food lowered by 5 to: " << this->fuel << " and " << this->food << " ";
+        std::cout << "Travel used. Fuel and Food lowered by 5 to: " << this->fuel << " and " << this->food << '\n';
         addToCrew();
+        useSystemsRecovery();
+        return hasFuel();
+    } else {
+        fuel -= 10;
+        food -= 10;
+        std::cout << "Travel used. Fuel and Food lowered by 10 to: " << this->fuel << " and " << this->food << '\n';
+        addToCrew();
+        useSystemsRecovery();
         return hasFuel();
     }
 }
 
-bool Playership::useEscape(SpaceShipEncounter &attacker) {//TBU IN FUNCTIONS if HP is low then attemp escape, if that fails then takeDamage();
+bool Playership::useEscape(SpaceShipEncounter &attacker) {//TBU IN FUNCTIONS if HP is low then attemp escape, if that fails then takeDamageFrom();
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
     int chance = (engiLvl + pilotLvl + this->speed + this->agility - (attacker.getRace().getOffensiveAbilityLevel())) / 3;
     if (chance >= randNumGen(0, 100))
     {
-        return hasFuel();
+        if(hasFuel()){
+            return true;
+        } else {
+            std::cout << "CRITCAL FAILURE: ship is out of fuel and cannot escape!\n";
+            return false;
+        }
     }
     return false;
 }
 
-bool Playership::useCombatManuver(SpaceShipEncounter &attacker){//used in takeDamage()
+bool Playership::useCombatManuver(int offensiveAbilityLevel){ //used in takeDamageFrom()
     int pilotLvl = findOfficer("pilot").getSkillLevel();
     int engiLvl = findOfficer("engineer").getSkillLevel();
-    int chance = (engiLvl + pilotLvl + this->agility + this->speed - attacker.getRace().getOffensiveAbilityLevel())/3;
+    int chance = (engiLvl + pilotLvl + this->agility + this->speed - offensiveAbilityLevel) / 4;
     if (chance >= randNumGen(0,100)){
         std::cout << "Attack was successfully evaded.\n";
         return true;
@@ -288,21 +305,24 @@ bool Playership::useCombatManuver(SpaceShipEncounter &attacker){//used in takeDa
     return false;
 }
 
-bool Playership::takeDamageFrom(SpaceShipEncounter &attacker) {//TBU IN FUNCTIONS
+bool Playership::takeDamageFrom(int offensiveAbilityLevel, int strength){
     //determine damage taken
-    int damage = (attacker.getRace().getOffensiveAbilityLevel() + attacker.getStrength() - this->defesiveAbilityLevel) / 2;
+    int damage = 0;
+    if (strength > this->defesiveAbilityLevel){ //enemy has more strength than our defense can hold up against
+        damage = (strength - this->defesiveAbilityLevel);
+    } else { 
+        damage = strength / 2;
+    }
     //attempt to avoid / take damage
-    if (useCombatManuver(attacker))
-    {
+    if (useCombatManuver(offensiveAbilityLevel)){
         //successful evasion
-        damage = 0;
         return true;
     }
-    if (shield <= 0 && armour <= 0)
-    {
+    if (shield <= 0 && armour <= 0){
         //deal damage to ship
         this->health -= damage;
-        std::cout << "ship's health has taken damage.";
+        std::cout << "Ship's health has taken "<< damage <<" damage. ";
+        std::cout << "\nShip Health: " << this->health << "\n\n";
         //deal damage to officers
         for (int i = 0; i < officers.size(); i++)
         {
@@ -314,13 +334,14 @@ bool Playership::takeDamageFrom(SpaceShipEncounter &attacker) {//TBU IN FUNCTION
         checkForDead();
         return true;
     } else if (shield > 0 ) { //deal damage only to ship
-        std::cout << "ship's shield has taken damage.";
         this->shield -= damage;
-        this->armour -= damage;
+        std::cout << "Ship's shield has taken " << damage << " damage. ";
+        std::cout << "\nShip Shield: " << this->shield << '\n';
         return true;
     } else if (armour > 0 && shield <= 0){
-        std::cout << "ship's shield is down, armour has taken damage.";
         this->armour -= damage;
+        std::cout << "Ship's shield is down, armour has taken " << damage << " damage. ";
+        std::cout << "\nShip Armour: " << this->armour << '\n';
     }
 }
 
@@ -331,6 +352,7 @@ void Playership::checkForDead(){ //used in takeDamage();
             if (crew > 0){
                 //create new officer of lesser skill
                 Officer newOfficer(temp.getJob(), randNumGen(0, temp.getSkillLevel()));
+                std::cout << "\nNew " << newOfficer.getJob() << " joins the ranks.\n";
                 //move dead officer into deadOfficers list
                 this->deadofficers.push_back(temp);
                 this->officers.erase(officers.begin() + i);
@@ -338,6 +360,8 @@ void Playership::checkForDead(){ //used in takeDamage();
                 if (newOfficer.getJob()== "engineer" || newOfficer.getJob() == "weapons"){
                     recalculateDefense();
                 }
+                newOfficer.displayOfficer();
+                std::cout << "\n";
                 this->crew--;
             }
         }
@@ -354,17 +378,22 @@ int Playership::addOfficer(Officer newOfficer){// used in checkForDead()
         }
     }
     officers.push_back(newOfficer);
-    std::cout << "new officer added\n";
     return 0;
 }
 
-void Playership::useSystemsRecovery(){
+void Playership::useSystemsRecovery(){ // will not occur if useEscape is used.
     int engiLvl = findOfficer("engineer").getSkillLevel();
     if (engiLvl >= randNumGen(0,100)){
         this->health += engiLvl;
-        this->shield += engiLvl;
+        this->shield += engiLvl*2;
         this->armour += engiLvl/4;
-        std::cout << "successful repairs\n";
+        std::cout << "Successful repairs, hp is now: " << this->health << ", shield is now: " << this->shield << " and armour is now: " << this->armour;
+    } else {
+        std::cout << "The engineer failed to improve the ships systems\n";
+    }
+    //restore health on officers and give exp
+    for (int i = 0; i < officers.size(); i++) {
+        officers[i].restoreHealth(10);
     }
 }
 
@@ -372,13 +401,9 @@ void Playership::useMine(PlanetEncounter &planet){
     int minerLvl = findOfficer("miner").getSkillLevel();
     int chance = (minerLvl + this->miningPower)/1.5;
     if (chance >= randNumGen(0,100)){
-        if (resources + 10 > this->cargoCapacity){
-            this->resources = this->cargoCapacity;
-            std::cout << "successful mine! you've maxed out cargoCapacity.\n";
-        } else {
-            this->resources += 10;
-            std::cout << "successful mine! you've gained 10 resources.\n";
-        }
+        std::cout << "successful mine! you've gained 10 resources.\n";
+        addResources(10);
+        findOfficer("miner").levelUpSkill(10);
     } else {
         std::cout << "mine failed...\n";
     }
@@ -387,12 +412,13 @@ void Playership::useMine(PlanetEncounter &planet){
 
 bool Playership::useAttack(SpaceShipEncounter &target){
     int weaponLvl = findOfficer("weapons").getSkillLevel() + this->strength;
-    int chance = (weaponLvl - target.getRace().getCombatManuverabilityLevel())/1.5;
+    int chance = (weaponLvl - (target.getRace().getCombatManuverabilityLevel()/2));
     if (chance >= randNumGen(0,100)){
-        std::cout << "successful attack\n";
+        std::cout << "You land a direct hit on your target.\n";
+        target.takeDamage(chance);
         return true;
     }
-    std::cout << "attack failed\n";
+    std::cout << "Your target manages to out manuver your attack.\n";
     return false;
 }
 
@@ -402,23 +428,34 @@ void Playership::recalculateDefense(){ //used after addOfficer and officer is of
     int chance = (engiLvl + weaponsLvl)/2;
     if (chance >= randNumGen(0,100)){
         this->defesiveAbilityLevel = chance;
-        std::cout << "new defesive ability level hsa been set to: " << chance << '\n';
+        std::cout << "Defesive ability level has been set to: " << chance << '\n';
     }
     
 }
 
 bool Playership::flyThroughAsteriodBelt(){
     int chance = (this->agility + this->speed + findOfficer("pilot").getSkillLevel())/3;
-    if (chance >= randNumGen(20,100)){
-        this->fuel += 20;
-        this->resources += 20;
-        std::cout << "successful flythrough an asteriodbelt, fuel and resources raised by 20\n";
+    if (chance >= randNumGen(0,80)){
+        this->fuel += 10;
+        std::cout << "Successful flythrough an asteriodbelt, fuel and resources raised by 10\n\n";
+        addResources(10);
+        findOfficer("pilot").levelUpSkill(10);
         return true;
+    }
+    return false;
+}
+
+void Playership::addResources(int amount){
+    if ((amount + this->resources) > this->cargoCapacity){
+        std::cout << "Cannot hold anymore resources, cargo capacity reached.\n";
+    } else {
+        this->resources += amount;
+        std::cout << "Reources has been raised by " << amount << " to " << this->resources << "/" << this->cargoCapacity <<'\n';
     }
 }
 
 void Playership::addToCrew(){ 
-    if (50 >= randNumGen(0,100)){
+    if (25 >= randNumGen(0,100)){
         std::cout << "Your ship has picked up a new crew member\n";
         this->crew++;
     }
@@ -426,9 +463,20 @@ void Playership::addToCrew(){
 
 void Playership::damageCrew(){// used in takeDamage
     if (50 >= randNumGen(0,100)){
-        std::cout << "a crew member has died\n";
+        std::cout << "A crew member has died\n";
         this->crew--;
     }
+}
+
+void Playership::getLoot(){
+    std::cout << "Looting the enemey ship. ";
+    int gatheredFuel = randNumGen(10,50);
+    int gatheredFood = randNumGen(10,50);
+    int gatheredResources = randNumGen(10,50);
+    std::cout << "Your crew loots the wreckage gathering, " << gatheredFood << " food, " << gatheredFuel << " fuel and " << gatheredResources << " resources.\n";
+    this->food += gatheredFood;
+    this->fuel += gatheredFuel;
+    addResources(gatheredResources);
 }
 
 Officer& Playership::findOfficer(std::string job){//used most abilities
@@ -450,63 +498,63 @@ Officer& Playership::findOfficer(std::string job){//used most abilities
 }
 
 void Playership::OffensiveSetup(){
-    this->speed = randNumGen(40, 70);
-    this->shield = randNumGen(40, 70);
-    this->agility = randNumGen(40, 70);
-    this->health = randNumGen(70, 100);
-    this->armour = randNumGen(70, 100);
-    this->strength = randNumGen(70, 100);
+    this->speed = randNumGen(midmin, midmax);
+    this->shield = randNumGen(midmin, midmax);
+    this->agility = randNumGen(midmin, midmax);
+    this->health = randNumGen(highmin, highmax);
+    this->armour = randNumGen(highmin, highmax);
+    this->strength = randNumGen(highmin, highmax);
     this->miningPower = randNumGen(0, 40);
     this->cargoCapacity = randNumGen(0, 40);
-    this->fuelEfficiency = randNumGen(40, 70);
+    this->fuelEfficiency = randNumGen(midmin, midmax);
 }
 
 void Playership::MinerSetup(){
-    this->speed = randNumGen(40, 70);
+    this->speed = randNumGen(midmin, midmax);
     this->shield = randNumGen(0, 40);
-    this->agility = randNumGen(40, 70);
-    this->health = randNumGen(40, 70);
+    this->agility = randNumGen(midmin, midmax);
+    this->health = randNumGen(midmin, midmax);
     this->armour = randNumGen(0, 40);
-    this->strength = randNumGen(40, 70);
-    this->miningPower = randNumGen(70, 100);
-    this->cargoCapacity = randNumGen(70, 100);
-    this->fuelEfficiency = randNumGen(70, 100);
+    this->strength = randNumGen(midmin, midmax);
+    this->miningPower = randNumGen(highmin, highmax);
+    this->cargoCapacity = randNumGen(highmin, highmax);
+    this->fuelEfficiency = randNumGen(highmin, highmax);
 }
 
 void Playership::DefensiveSetup(){
-    this->speed = randNumGen(70, 100);
-    this->shield = randNumGen(70, 100);
-    this->agility = randNumGen(70, 100);
-    this->health = randNumGen(70, 100);
-    this->armour = randNumGen(70, 100);
-    this->strength = randNumGen(0, 40);
-    this->miningPower = randNumGen(40, 70);
-    this->cargoCapacity = randNumGen(40, 70);
-    this->fuelEfficiency = randNumGen(40, 70);
+    this->speed = randNumGen(highmin, highmax);
+    this->shield = randNumGen(highmin, highmax);
+    this->agility = randNumGen(highmin, highmax);
+    this->health = randNumGen(highmin, highmax);
+    this->armour = randNumGen(highmin, highmax);
+    this->strength = randNumGen(0, 20);
+    this->miningPower = randNumGen(midmin, midmax);
+    this->cargoCapacity = randNumGen(midmin, midmax);
+    this->fuelEfficiency = randNumGen(midmin, midmax);
 }
 
 void Playership::OneHitSetup(){
-    this->speed = randNumGen(70, 100);
-    this->shield = randNumGen(70, 100);
-    this->agility = randNumGen(70, 100);
+    this->speed = randNumGen(highmin, highmax);
+    this->shield = randNumGen(highmin, highmax);
+    this->agility = randNumGen(highmin, highmax);
     this->health = 1;
-    this->armour = randNumGen(40, 70);
+    this->armour = randNumGen(midmin, midmax);
     this->strength = randNumGen(90, 100);
-    this->miningPower = randNumGen(40, 70);
-    this->cargoCapacity = randNumGen(40, 70);
-    this->fuelEfficiency = randNumGen(40, 70);
+    this->miningPower = randNumGen(midmin, midmax);
+    this->cargoCapacity = randNumGen(midmin, midmax);
+    this->fuelEfficiency = randNumGen(midmin, midmax);
 }
     
 void Playership::AverageSetup(){
-    this->speed = randNumGen(40, 70);
-    this->shield = randNumGen(40, 70);
-    this->agility = randNumGen(40, 70);
-    this->health = randNumGen(40, 70);
-    this->armour = randNumGen(40, 70);
-    this->strength = randNumGen(40, 70);
-    this->miningPower = randNumGen(40, 70);
-    this->cargoCapacity = randNumGen(40, 70);
-    this->fuelEfficiency = randNumGen(40, 70);
+    this->speed = randNumGen(midmin, midmax);
+    this->shield = randNumGen(midmin, midmax);
+    this->agility = randNumGen(midmin, midmax);
+    this->health = randNumGen(midmin, midmax);
+    this->armour = randNumGen(midmin, midmax);
+    this->strength = randNumGen(midmin, midmax);
+    this->miningPower = randNumGen(midmin, midmax);
+    this->cargoCapacity = randNumGen(midmin, midmax);
+    this->fuelEfficiency = randNumGen(midmin, midmax);
 }
 
 

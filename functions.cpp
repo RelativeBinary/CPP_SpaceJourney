@@ -6,9 +6,10 @@
 
 int randNumGen(int min, int max){
     int value = 0;
+    std::mt19937 static eng(time(0));
+    std::uniform_int_distribution<> dist(min, max-1);//min(includsive) max(exclusive)
     for(int i =0; i<20; i++){
-        value = rand() % max;
-        value += min;
+        value = dist(eng);
     } 
     //std::cout << "random number is : " << value << '\n';
     return value;
@@ -16,15 +17,13 @@ int randNumGen(int min, int max){
 }
 
 std::string getRandName(){
-    std::vector<std::string> names = {"Barb Dwyer", "Chester Minit", "Doris Shutt", "Dick Hertz", "Freda Livery", "Gus Tofwynde", "Gary Oakie", "Ivana Dayov"};
+    std::vector<std::string> names = {"Spike S","Faye V","Edward W", "Jet Black" ,"Barb Dwyer", "Chester Minit", "Doris Shutt", "Dick Hertz", "Freda Livery", "Gus Tofwynde", "Gary Oakie", "Ivana Dayov"};
     std::string newName = names[randNumGen(0, names.size())];
-    std::cout << "the new name chosen was: " << newName << '\n';
     return newName;
 }
 
 std::string determineShipType(){
     int value = randNumGen(0, 5);
-    std::cout << "determining ship type\n";
     if (value == 0){
         return "Dawn Sailor";
     }else if ( value == 1){
@@ -57,13 +56,12 @@ std::string determineRaceType(){
     else if (value == 4){
         race = "Human";
     }
-    std::cout << "RACE CHOOSEN WAS: " << race << '\n';
+    //std::cout << "RACE CHOOSEN WAS: " << race << '\n';
     return race;
 }
 
 std::string determineSectorType(){
     int value = randNumGen(0, 100);
-    std::cout << "determining sector type\n";
     std::string sector = "";
     if (value >= 0 && value <= 34)
     {
@@ -84,7 +82,9 @@ std::string determineSectorType(){
     else if (value >= 90 && value <= 99)
     {
         sector = "AsteriodBelt";
+    } else {
+        std::cerr << "there was an error in selecting sector type\n";
+        sector = "error";
     }
-    std::cout << "SECTOR CHOOSEN WAS: " << sector << '\n';
     return sector;
 }
