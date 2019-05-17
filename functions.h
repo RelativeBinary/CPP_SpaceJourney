@@ -12,7 +12,3 @@ std::string determineShipType();
 std::string determineSectorType();
 #endif
 
-    //TODO:
-    /*
-- Several Functions for development
-*/

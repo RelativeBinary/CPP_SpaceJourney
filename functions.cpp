@@ -4,24 +4,25 @@
 #include <random>
 #include <time.h>
 
+//Generates a random number in a range min(includsive) max(exclusive)
 int randNumGen(int min, int max){
     int value = 0;
     std::mt19937 static eng(time(0));
-    std::uniform_int_distribution<> dist(min, max-1);//min(includsive) max(exclusive)
+    std::uniform_int_distribution<> dist(min, max-1);
     for(int i =0; i<20; i++){
         value = dist(eng);
     } 
-    //std::cout << "random number is : " << value << '\n';
     return value;
-
 }
 
+//Officer class uses this function to get names.
 std::string getRandName(){
-    std::vector<std::string> names = {"Spike S","Faye V","Edward W", "Jet Black" ,"Barb Dwyer", "Chester Minit", "Doris Shutt", "Dick Hertz", "Freda Livery", "Gus Tofwynde", "Gary Oakie", "Ivana Dayov"};
+    std::vector<std::string> names = {"Spike S", "Faye V", "Dick Hertz", "Edward W", "Jet Black", "Barb Dwyer", "Chester Minit", "Doris Shutt", "Freda Livery", "Gus Tofwynde", "Gary Oakie", "Ivana Dayov"};
     std::string newName = names[randNumGen(0, names.size())];
     return newName;
 }
 
+//SpaceShip class uses this function to get types.
 std::string determineShipType(){
     int value = randNumGen(0, 5);
     if (value == 0){
@@ -38,6 +39,7 @@ std::string determineShipType(){
     return "error";
 }
 
+//Race class uses this function to get types.
 std::string determineRaceType(){
     int value = randNumGen(0, 5);
     std::string race = "";
@@ -56,10 +58,10 @@ std::string determineRaceType(){
     else if (value == 4){
         race = "Human";
     }
-    //std::cout << "RACE CHOOSEN WAS: " << race << '\n';
     return race;
 }
 
+//main uses this function to set what space sector the player will run into.
 std::string determineSectorType(){
     int value = randNumGen(0, 100);
     std::string sector = "";
@@ -88,3 +90,4 @@ std::string determineSectorType(){
     }
     return sector;
 }
+

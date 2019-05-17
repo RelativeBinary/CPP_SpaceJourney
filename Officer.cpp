@@ -12,16 +12,16 @@ Officer::Officer(){
     this->job = "Captain";
     this->age = 19;
     this->health = 84;
-    this->skillLevel = 55;
+    this->skillLevel = 55; //skillLevel is capped at 99
     this->isDead = false;
 }
 
-Officer::Officer(std::string job, int skillLevel){
+Officer::Officer(std::string j, int sLevel){
     this->name = getRandName();
-    this->job = job;
+    this->job = j;
     this->age = randNumGen(1,100);
     this->health = randNumGen(50, 100);
-    this->skillLevel = skillLevel;
+    this->skillLevel = sLevel;
     this->isDead = false;
     levelUpSkill(0); //checks if the skillLevel given warrents a rank up.
 }
@@ -32,14 +32,15 @@ void Officer::displayOfficer(){
     std::cout << std::left << std::setw(8) << "Job: " << std::left << std::setw(19) << this->job;
     std::cout << std::left << std::setw(8) << "Age: " << std::left << std::setw(19) << this->age << '\n';
     std::cout << std::left << std::setw(8) << "Health: " << std::left << std::setw(19) << this->health;
-    std::cout << std::left << std::setw(12) << "Skill Proficiency: " << this->skillLevel << '\n';
+    std::cout << std::left << std::setw(12) << "Skill Profficiency: " << this->skillLevel << '\n';
     std::cout << "Status: " << ((this->isDead) ? "Dead" : "Alive") << '\n';
     if (this->isDead){
-        std::cout << "Status: Died on sector " << this->sectorOfDeath << '\n';
+        std::cout << "Died on sector: " << this->sectorOfDeath << '\n';
+        std::cout << "Cause of death: " << this->causeOfDeath << '\n';
     }
     std::cout <<'\n';
 }
-
+#pragma region //getters
 bool Officer::getIsDead() {
     return this->isDead;
 }
@@ -67,27 +68,29 @@ std::string Officer::getRank(){
 std::string Officer::getJob(){
     return this->job;
 }
+#pragma endregion
 
-void Officer::takeDamage(int damage){
-    if(this->job != "none"){
+void Officer::takeDamage(int damage, std::string dmgSource){
+    if(this->job != "none"){//checks for null type officer
         this->health -= damage;
         std::cout << "Officer: " << damage << " damage dealt, " << this->job << " " << this->name << "'s hp is now: " << this->health << "hp\n";
     }
 
-    if (this->health <= 0){
-        std::cout << this->name << " was fatally wounded.\n";
+    if (this->health <= 0){//sets hp to 0 and sets how and when an officer died
         this->isDead = true;
         this->sectorOfDeath = SpaceSector::getSectorCount();
+        this->causeOfDeath = dmgSource;
         this->health = 0;
         std::cout << this->name << " has been marked as dead.\n";
     }
 }
 
-void Officer::restoreHealth(int points){
+void Officer::restoreHealth(int points){//restores health to living officers
     if (this->health >= 1){
         if (this->job !="none"){
             std::cout << "Officer: " << points << " health restored on " << this->name << ' ';
             this->health += points;
+            //magical bonus hp restored
             healthFortuna();
             std::cout << this->name << "'s hp is now: " << this->health << "hp\n";
         }
@@ -98,27 +101,36 @@ void Officer::restoreHealth(int points){
     }
 }
     
-void Officer::levelUpSkill(int exp) {
-    this->skillLevel += exp;
-    skillFortuna();
-    int lvl = this->skillLevel;
-    std::string rank = this->rank;
-    std::cout << this->job << " " << this->name << " gained " << exp << "exp " << this->name << " is now level: " << this->skillLevel << " ";
-    if (lvl >= 90 && rank != "Major"){
+void Officer::levelUpSkill(int exp) {//raises the officers skill level
+    if (this->skillLevel + exp >= 100) {//caps the officers level if maxed out
+        this->skillLevel = 99;
+        std::cout << this->job << " " << this->name << " has maxed out their skill! Skill level is now: " << this->skillLevel << " ";
+    } else {//raises the officers skill level
+        this->skillLevel += exp;
+        //magical bonus exp
+        skillFortuna();
+        std::cout << this->job << " " << this->name << " gained " << exp << "exp, is now level: " << this->skillLevel << " ";
+    }
+    
+    //check if the officer can rank up
+    if (this->skillLevel >= 90 && this->rank != "Major"){
         std::cout << "Officer: " << this->name << " was promoted to Major! ";
         this->rank = "Major";
-    } else if (lvl >= 75 && rank != "Lieutenant Commander"){
+    } else if (this->skillLevel >= 75 && this->skillLevel < 90 && this->rank != "Lieutenant Commander"){
         std::cout << "Officer: " << this->name << " was promoted to Lieutenant Commander ";
         this->rank = "Lieutenant Commander";
-    } else if (lvl >= 50 && rank != "Lieutenant"){
+    }
+    else if (this->skillLevel >= 50 && this->skillLevel < 75 && this->rank != "Lieutenant")
+    {
         std::cout << this->job << " " << this->name << " was promoted to Lieutenant ";
         this->rank = "Lieutenant";
     }
     std::cout  << '\n';
+    //magical extra level up
     rankFortuna();
 }
 
-void Officer::healthFortuna(){
+void Officer::healthFortuna(){//used in restoreHealth
     int chance = randNumGen(0,100);
     if (chance <= 5){
         std::cout << "Health Fortuna! " << this->name << "'s hp is increased by 10\n";
@@ -127,16 +139,26 @@ void Officer::healthFortuna(){
 
 }
 
-void Officer::skillFortuna(){
+void Officer::skillFortuna(){//used in levelUpSkill
     int chance = randNumGen(0,100);
     if (chance <= 5){
         std::cout << "Skill Fortuna! " << this->name << "'s gained bonus 10 exp\n";
-        this->skillLevel += 10;
+        if (this->skillLevel + 10 >= 100)
+        {
+            this->skillLevel = 99;
+            std::cout << this->job << " " << this->name << " has maxed out their skill! Skill level is now: " << this->skillLevel << " ";
+        }
+        else
+        {
+            this->skillLevel += 10;
+            skillFortuna();
+            std::cout << this->job << " " << this->name << " gained 10 exp, is now level: " << this->skillLevel << " ";
+        }
     }
 
 }
 
-void Officer::rankFortuna(){
+void Officer::rankFortuna(){ //used in levelUpSkill
     int chance = randNumGen(0,100);
     if (chance == 0){
         std::cout << "Rank Fortuna! " << this->name << "'s";
@@ -150,3 +172,4 @@ void Officer::rankFortuna(){
         }
     }
 }
+

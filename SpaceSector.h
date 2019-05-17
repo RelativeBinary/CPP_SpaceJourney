@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-class Race {//COMPLETE
+class Race {
     int combatManuverabilityLevel = 0;
     int offensiveAbilityLevel = 0;
     int defesiveAbilityLevel = 0;
@@ -15,6 +15,7 @@ class Race {//COMPLETE
     public:
     std::string type = "";
     private:
+    //setup stats
     int lowmin = 0;
     int lowmax = 40;
     int midmin = 40; 
@@ -46,23 +47,22 @@ class Race {//COMPLETE
 
 };
 
-class SpaceSector {//COMPLETE
+class SpaceSector {
     protected:
         Race race;
         std::string type = "SpaceSector";
     public:
         static int sectorCount;
-        SpaceSector();//sectorCount auto incremented, auto race setup included
+        SpaceSector();              //sectorCount auto incremented, auto race setup included
         Race getRace();
         std::string getType();
-        void displaySpaceSector(); //std::cout << "Sector #" << sectorCout << '\n';
+        void displaySpaceSector(); 
         static int getSectorCount(){
             return sectorCount;
         }
 
 };
 
-//INCOMPLETE
 class PlanetEncounter : public SpaceSector{
     int resources;
     public:
@@ -77,9 +77,9 @@ class TradingStation : public SpaceSector{
 };
 
 class AsteriodBelt : public SpaceSector{
-    int strength = 10;
+    int strength = 10; //will be modified in the constructor to scale with higher space sector counts
     public: 
-        AsteriodBelt();        //should easily be created without need for parameters
+        AsteriodBelt();       
         void displayAsteriodBelt();
         int getStrength();
 };
@@ -87,3 +87,4 @@ class AsteriodBelt : public SpaceSector{
 //empty sector doesnt do anything
 
 #endif
+

@@ -5,30 +5,30 @@
 #include "SpaceSector.h"
 #include "functions.h"
 
-Race::Race(){
+Race::Race(){//default constructor to randomly set race
     this->type = determineRaceType();
     setupStats(type);
 }
 
-Race::Race(std::string type){
-    setupStats(type);
+Race::Race(std::string rType){//the spacesector was given a specific race setting
+    setupStats(rType);
 }
 
-void Race::setupStats(std::string type){
-    if (type == "Solaris"){
+void Race::setupStats(std::string rType){//sets up the race stats based on type
+    if (rType == "Solaris"){
         hostileSetup();
-    }else if (type == "Scar"){
+    }else if (rType == "Scar"){
         minerSetup();
-    }else if (type == "Celestial"){
+    }else if (rType == "Celestial"){
         passiveSetup();
-    }else if (type == "Galvamek"){
+    }else if (rType == "Galvamek"){
         defensiveSetup();
-    }else if (type == "Human"){
+    }else if (rType == "Human"){
         averageSetup();
     }
 }
 
-void Race::displayRace(){
+void Race::displayRace(){//displays race stats
     std::cout << std::left << std::setw(12) << "dodgeLvl:" << std::left << std::setw(12) << this->combatManuverabilityLevel << '\n';
     std::cout << std::left << std::setw(12) << "offensiveLvl:" << std::left << std::setw(12) << this->offensiveAbilityLevel;
     std::cout << std::left << std::setw(12) << "defesiveLvl:" << std::left << std::setw(12) << this->defesiveAbilityLevel << '\n';
@@ -122,16 +122,17 @@ void Race::setOffensiveAbilityLevel(int level){
 }
 #pragma endregion
 
-SpaceSector::SpaceSector(){
+SpaceSector::SpaceSector(){//default constructor
     SpaceSector::sectorCount++;
 }
 
-void SpaceSector::displaySpaceSector(){
+void SpaceSector::displaySpaceSector(){//displays basic stats
     std::cout << "Race: " << this->race.getType() << '\n';
     this->race.displayRace();
     std::cout << "Sector Type: " << this->type << '\n';
 }
 
+#pragma reigon //getters
 Race SpaceSector::getRace(){
     return this->race;
 }
@@ -139,7 +140,9 @@ Race SpaceSector::getRace(){
 std::string SpaceSector::getType(){
     return this->type;
 }
+#pragma endregion
 
+//PLANET ENCOUNTER CLASS FUNCTIONS
 PlanetEncounter::PlanetEncounter() : SpaceSector(){
     this->type = "PlanetEncounter";
 }
@@ -148,6 +151,7 @@ void PlanetEncounter::displayPlanet(){
     displaySpaceSector();
 }
 
+//TRADING STATION CLASS FUNCTIONS
 TradingStation::TradingStation() : SpaceSector(){
     this->type = "TradingStation";
 }
@@ -156,10 +160,11 @@ void TradingStation::displayStation(){
     displaySpaceSector();
 }
 
+//ASTERIOD BELT CLASS FUNCTIONS
 AsteriodBelt::AsteriodBelt() : SpaceSector(){
     this->type = "AsteriodBelt";
-    this->race.setOffensiveAbilityLevel(9999); //if you do take damage from passing through an asteriodbelt the chance of manuvering through it is slim.
-    this->strength *= (SpaceSector::getSectorCount()/2); //strength of the asteroid belt is multiplied by sectorCount/2 so sector 20 should make strength 100.
+    this->race.setOffensiveAbilityLevel(9999); //cannot out manuver an asteriod belt if the pilot fails to fly through
+    this->strength *= (SpaceSector::getSectorCount()/2); //asteriiod belts become stronger in higher sector counts
 }
 
 void AsteriodBelt::displayAsteriodBelt(){
@@ -169,5 +174,7 @@ void AsteriodBelt::displayAsteriodBelt(){
 int AsteriodBelt::getStrength(){
     return this->strength;
 }
+
+
 
 
